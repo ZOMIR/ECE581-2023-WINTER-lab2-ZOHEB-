@@ -1,0 +1,2044 @@
+setting auto_restore_mw_cel_lib_setup true
+Initializing gui preferences from file  /u/zmir/.synopsys_dv_prefs.tcl
+dc_shell> set top_desgn fifo1_srama
+fifo1_srama
+dc_shell> man report_constraint
+2.  Synopsys Commands                                        Command Reference
+                               report_constraint
+
+NAME
+       report_constraint
+              Displays constraint-related information about a design.
+
+SYNTAX
+       status report_constraint
+               [-all_violators]
+               [-verbose]
+               [-significant_digits digits]
+               [-max_area]
+               [-max_delay]
+               [-critical_range]
+               [-min_delay]
+               [-max_capacitance]
+               [-min_capacitance]
+               [-max_transition]
+               [-max_fanout]
+               [-cell_degradation]
+               [-max_toggle_rate]
+               [-min_porosity]
+               [-max_dynamic_power]
+               [-max_leakage_power]
+               [-max_total_power]
+               [-max_net_length]
+               [-connection_class]
+               [-multiport_net]
+               [-nosplit]
+               [-min_pulse_width]
+               [-min_period]
+               [-scenarios scenario_list]
+               [-ignore_infeasible_paths]
+
+   Data Types
+       digits            integer
+       scenario_list     list
+
+ARGUMENTS
+       -all_violators
+              Displays  a  summary  of all of the optimization and design rule
+              constraints with violations in the current design.  The -verbose
+              option  provides  detailed  information  about constraint viola-
+              tions.  Multiple violations for a given constraint are listed in
+              order from largest to smallest violation.
+
+       -verbose
+              Displays more detail about constraint calculations.
+
+       -significant_digits digits
+              Specifies the number of digits to the right of the decimal point
+              that are to be reported.  The digits value must be between 0 and
+              13.   The  default is 2.  This option overrides the value set by
+              the report_default_significant_digits variable.
+
+       -max_area
+              Displays only the max_area constraint information.  The  default
+              behavior (without this option and similar options) is to display
+              all optimization and design rule constraints.
+
+       -max_delay
+              Displays only the max_delay and setup information.
+
+       -critical_range
+              Displays  only  the  critical_range  information.   The   criti-
+              cal_range  is  a  design  rule that directs the tool to optimize
+              near-critical paths along with the most critical path.
+
+       -min_delay
+              Displays only the min_delay and hold information.
+
+       -max_capacitance
+              Displays only the max_capacitance constraint  information.   The
+              max_capacitance  constraint  is  a  design  rule that limits the
+              total capacitance on a net.
+
+       -min_capacitance
+              Displays only the min_capacitance constraint  information.   The
+              min_capacitance constraint is a design rule that ensures a mini-
+              mum total capacitance on a net.
+
+       -max_transition
+              Displays only the max_transition  constraint  information.   The
+              max_transition constraint is a design rule that limits the tran-
+              sition time on a net.  If  the  library  uses  the  cmos2  delay
+              model, this option shows the max_edge_rate information.
+
+       -max_fanout
+              Displays  only  the max_fanout constraint information.  The con-
+              straint is a design rule that limits the fanout_load on a net.
+
+       -cell_degradation
+              Displays only the cell_degradation constraint information.   The
+              cell_degradation  constraint  is  a  design rule that limits the
+              total capacitance on a net, with  the  limit  depending  on  the
+              transition times at the inputs of the cell.
+
+       -max_toggle_rate
+              Displays only the max_toggle_rate constraint information.
+
+       -min_porosity
+              Displays  only  the  min_porosity  constraint  information.  The
+              min_porosity  constraint  is  an  optimization  constraint   for
+              routability.
+
+       -max_dynamic_power
+              Displays only the max_dynamic_power constraint information.  The
+              default behavior (without this option and similar  power-related
+              options)  is  to  display all types of power constraint informa-
+              tion.  Queries for power constraint information are  valid  only
+              if a power-related license is available.
+
+       -max_leakage_power
+              Displays only the max_leakage_power constraint information.
+
+       -max_total_power
+              Displays only the max_total_power constraint information.
+
+       -max_net_length
+              Displays   only   max_net_length  constraint  information.   The
+              max_net_length constraint is a design rule that limits the route
+              length  of a net. For more information, see the man page for the
+              set_max_net_length command.
+
+       -connection_class
+              Displays only the connection_class constraint information.   The
+              connection_class constraint is displayed only if there is a con-
+              nection_class violation. For more information, see the man  page
+              for the set_connection_class command.
+
+       -multiport_net
+              Displays  only  the  multiport_net constraint information.  This
+              constraint specifies whether multiple output ports can  be  con-
+              nected  to  a  given net. For more information, see the man page
+              for the set_fix_multiple_port_nets command.
+
+       -nosplit
+              Prevents line splitting and facilitates writing applications  to
+              extract  information from the report output.  Most of the design
+              information is listed in fixed-width columns.  If  the  informa-
+              tion for a given field exceeds the width of the column, the next
+              field begins on a new line, starting in the correct column.
+
+       -min_pulse_width
+              Displays only the min_pulse_width constraint  information.   The
+              min_pulse_width constraint is a design rule that limits the min-
+              imum duration of clock pulses in the clock network.
+
+       -min_period
+              Displays only the minimum period  constraint  information.   The
+              min_period  constraint  is  a  design  rule  that sets a minimum
+              period on a clock signal. The min_period check is supported only
+              for ideal clocks.
+
+       -scenarios scenario_list
+              Reports  constraints for the specified scenarios of a multi-sce-
+              nario design.  Each scenario is reported  separately.   Inactive
+              scenarios are not reported.
+
+              If  you  do  not  use this option, the report_constraint command
+              reports constraints on all active scenarios, except when you use
+              the -all_violators or -verbose option.  If you use these options
+              but not the -scenarios  option,  the  report_constraint  command
+              reports constraints only on the current scenario.
+
+       -ignore_infeasible_paths
+              Ignores  all  the  paths flagged as infeasible during the latest
+              compilation.
+
+DESCRIPTION
+       The report_constraint command displays the  following  information  for
+       the constraints on the current design:
+
+        o Whether the constraint was violated or met
+
+        o By how much the constraint value was violated or met
+
+        o The design object that was the worst violator
+
+       The  maximum delay information shows cost by path group.  This includes
+       violations of setup time on registers or ports with  output  delay,  as
+       well  as violations of set_max_delay commands.  The total maximum delay
+       cost is the sum of each group's weighted cost.  For details on creating
+       path groups, refer to the group_path command man page.  To see the cur-
+       rent path groups in the design, use the report_path_group command.
+
+       The minimum delay cost includes violations of hold time on registers or
+       ports  with  output  delay  as well as violations of set_min_delay com-
+       mands.
+
+       In the path delay reports, if a pin drives a high-fanout net,  this  is
+       indicated  in the report by a # symbol between the incremental and path
+       timing values.  Creation and  usage  of  scenarios  is  available  with
+       Design Compiler Graphical.
+
+   Multicorner-Multimode Support
+       By  default,  this  command uses information from all active scenarios.
+       You can select different scenarios by using the -scenarios option.
+
+EXAMPLES
+       The following example shows brief constraint information for  the  cur-
+       rent design:
+
+         prompt> report_constraint
+
+         ****************************************
+         Report : constraint
+         Design : counter
+         Version: 1998.02
+         Date   : Fri Dec 26 15:49:46 1997
+         ****************************************
+
+                                                            Weighted
+             Group (max_delay/setup)      Cost     Weight     Cost
+             -----------------------------------------------------
+             CLK                          0.00      1.00      0.00
+             default                      0.00      1.00      0.00
+             -----------------------------------------------------
+             max_delay/setup                                  0.00
+
+                                       Total Neg  Critical
+             Group (critical_range)      Slack    Endpoints   Cost
+             -----------------------------------------------------
+             CLK                          0.00         0      0.00
+             default                      0.00         0      0.00
+             -----------------------------------------------------
+             critical_range                                   0.00
+
+             Constraint                                       Cost
+             -----------------------------------------------------
+             max_transition                                   0.00 (MET)
+             max_fanout                                       0.00 (MET)
+             max_delay/setup                                  0.00 (MET)
+             sequential_clock_pulse_width                     0.00 (MET)
+             critical_range                                   0.00 (MET)
+             min_delay/hold                                   0.40 (VIOLATED)
+             max_leakage_power                                6.00 (VIOLATED)
+             max_dynamic_power                               14.03 (VIOLATED)
+             max_area                                        48.00 (VIOLATED)
+
+       The  following example displays detailed constraint information for the
+       current design:
+
+         prompt> report_constraint -verbose
+
+         ****************************************
+         Report : constraint
+                 -verbose
+         Design : counter
+         Version: v3.1a
+         Date   : Tue 1992
+         ****************************************
+
+           Startpoint: ffb (rising edge-triggered flip-flop clocked by CLK)
+           Endpoint: ffd (rising edge-triggered flip-flop clocked by CLK)
+           Path Group: CLK
+           Path Type: max
+
+           Point                                    Incr       Path
+           -----------------------------------------------------------
+           clock CLK (rise edge)                    0.00       0.00
+           startpoint clock skew (ideal)            0.00       0.00
+           startpoint clock uncertainty             0.00       0.00
+           ffb/CP (FD3)                             0.00       0.00 r
+           ffb/QN (FD3)                             2.42       2.42 r
+           w/Z (ND4)                                0.59       3.01 f
+           q/Z (EO)                                 1.13       4.14 f
+           j/Z (AO2)                                1.08       5.22 r
+           ffd/D (FDS2)                             0.00       5.22 r
+           data arrival time                                   5.22
+
+           clock CLK (rise edge)                   10.00      10.00
+           endpoint clock skew (ideal)              0.00      10.00
+           endpoint clock uncertainty               0.00      10.00
+           ffd/CP (FDS2)                            0.00      10.00 r
+           library setup time                      -0.90       9.10
+           data required time                                  9.10
+           -----------------------------------------------------------
+           data required time                                  9.10
+           data arrival time                                  -5.22
+           -----------------------------------------------------------
+           slack (MET)                                         3.88
+
+             Design: counter
+
+             max_area              30.00
+           - Current Area          78.00
+           ------------------------------
+             Slack                -48.00  (VIOLATED)
+
+             Design: counter
+
+             max_leakage_power         70.00
+           - Current Leakage Power     76.00
+           ----------------------------------
+             Slack                     -6.00  (VIOLATED)
+
+             Design: counter
+
+             max_dynamic_power        500.00
+           - Current Dynamic Power    514.03
+           ----------------------------------
+             Slack                    -14.03  (VIOLATED)
+
+       The following example displays detailed information on only those  con-
+       straints that have violations:
+
+         prompt> report_constraint -all_violators -verbose
+
+         ****************************************
+         Report : constraint
+                 -all_violators
+                 -verbose
+         Design : led
+         Version: v3.2a
+         Date   : Tue Jan  3 13:00:45 1995
+         ****************************************
+
+           Startpoint: b (input port)
+           Endpoint: z5 (output port)
+           Path Group: default
+           Path Type: max
+
+           Point                                    Incr       Path
+           -----------------------------------------------------------
+           input external delay                     0.00       0.00 r
+           b (in)                                   0.00       0.00 r
+           U5/Z (IV)                                1.32       1.32 f
+           U3/Z (NR2)                               3.35       4.67 r
+           U18/Z (AO6)                              0.73       5.40 f
+           U22/Z (AO4)                              1.42       6.82 r
+           z5 (out)                                 0.00       6.82 r
+           data arrival time                                   6.82
+
+           max_delay                                6.50       6.50
+           output external delay                    0.00       6.50
+           data required time                                  6.50
+           -----------------------------------------------------------
+           data required time                                  6.50
+           data arrival time                                  -6.82
+           -----------------------------------------------------------
+           slack (VIOLATED)                                   -0.32
+
+           Startpoint: c (input port)
+           Endpoint: z3 (output port)
+           Path Group: default
+           Path Type: max
+
+           Point                                    Incr       Path
+           -----------------------------------------------------------
+           input external delay                     0.00       0.00 r
+           c (in)                                   0.00       0.00 r
+           U6/Z (IV)                                1.34       1.34 f
+           U2/Z (NR2)                               3.35       4.69 r
+           U15/Z (AO7)                              0.87       5.56 f
+           U24/Z (AO3)                              1.02       6.57 r
+           z3 (out)                                 0.00       6.57 r
+           data arrival time                                   6.57
+
+           max_delay                                6.50       6.50
+           output external delay                    0.00       6.50
+           data required time                                  6.50
+           -----------------------------------------------------------
+           data required time                                  6.50
+           data arrival time                                  -6.57
+           -----------------------------------------------------------
+           slack (VIOLATED)                                   -0.07
+
+             Net: a
+
+             max_transition         1.00
+           - Transition Time        1.26
+           ------------------------------
+             Slack                 -0.26  (VIOLATED)
+
+             Net: a
+
+             max_fanout             5.00
+           - Fanout                 7.00
+           ------------------------------
+             Slack                 -2.00  (VIOLATED)
+
+             Design: led
+
+             max_area              30.00
+           - Current Area          36.00
+           ------------------------------
+             Slack                 -6.00  (VIOLATED)
+
+             Design: led
+
+             max_dynamic_power       1000.00
+           - Current Dynamic Power   1254.81
+           ----------------------------------
+             Slack                   -254.81  (VIOLATED)
+
+       The   following   example   displays   the  max_area,  max_delay/setup,
+       min_delay/hold, and max_leakage_power constraint information:
+
+         prompt> report_constraint -max_area -max_delay -min_delay \
+            -max_leakage_power
+
+         ****************************************
+         Report : constraint
+                  -max_area
+                  -max_delay
+                  -min_delay
+                  -max_leakage_power
+         Design : led
+         Version: v3.2a
+         Date   : Tue Jan  3 13:00:56 1995
+         ****************************************
+
+                                                            Weighted
+             Group (max_delay/setup)      Cost     Weight     Cost
+             -----------------------------------------------------
+             default                      0.32      1.00      0.32
+             -----------------------------------------------------
+             max_delay/setup                                  0.32
+
+             Constraint                                       Cost
+             -----------------------------------------------------
+             max_delay/setup                                  0.32 (VIOLATED)
+             max_area                                         6.00 (VIOLATED)
+
+         --------------------------------------------------------------------
+
+SEE ALSO
+       create_clock(2)
+       group_path(2)
+       report_clock(2)
+       report_design(2)
+       report_path_group(2)
+       report_timing(2)
+       report_timing_requirements(2)
+       report_min_pulse_width(2)
+       set_critical_range(2)
+       set_fix_multiple_port_nets(2)
+       set_max_area(2)
+       set_max_delay(2)
+       set_max_dynamic_power(2)
+       set_max_leakage_power(2)
+
+                          Version Q-2019.12-SP3
+            Copyright (c) 2020 Synopsys, Inc. All rights reserved.
+dc_shell> man report_constraints
+Error: No manual entry for 'report_constraints' (CMD-025)
+dc_shell> man report_constraints
+Error: No manual entry for 'report_constraints' (CMD-025)
+dc_shell> set top_design fifo1_srama
+fifo1_srama
+dc_shell> source ../scripts/dc.tcl
+set lib_dir /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib
+# Decoder ring for the libraries
+# You will need to follow another example or look in the library directories to understand.
+# lib_types is used for the dc/dct linking variables and ICC2 NDM lcoations.
+# /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/db_nldm
+# /          $lib_dir                   /lib/ $lib_type /db_nldm
+# link_library, Target_library use the sub_lib_types and corner variables. 
+# For sub_lib_types and corner:
+# Example:
+#     saed32hvt_ss0p75v125c.db
+#     |sub_lib  corner    .db
+# The current flow tries to find all sub_lib and all corners in all the search paths.  Any match will be put in the library list.
+# Wild cards can be used, but be careful.  Multiple matches can occur in ways you don't want.
+# For the target library, the same method is used as the link library except only HVT and RVT lib_types are used.
+# ICC2 NDM choosing also uses the sub_lib_types so that only the required libraries and extras are not loaded.
+# fifo1
+#set top_design fifo1
+set add_ios 1
+1
+set pad_design 1
+1
+set design_size { 580 580  } 
+ 580 580  
+set design_io_border 310
+310
+set dc_floorplanning 1
+1
+set enable_dft 0
+0
+set innovus_enable_manual_macro_placement 0
+0
+set rtl_list [list ../rtl/$top_design.sv ]
+../rtl/fifo1_srama.sv
+set slow_corner "ss0p95v125c_2p25v ss0p95v125c"
+ss0p95v125c_2p25v ss0p95v125c
+set fast_corner "ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c"
+ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c
+set synth_corners $slow_corner
+ss0p95v125c_2p25v ss0p95v125c
+set synth_corners_target "ss0p95v125c" 
+ss0p95v125c
+#set synth_corners_target "ss0p95v125c" 
+set synth_corners_slow $slow_corner
+ss0p95v125c_2p25v ss0p95v125c
+set synth_corners_fast $fast_corner
+ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c
+set slow_metal Cmax_125
+Cmax_125
+set fast_metal Cmax_125
+Cmax_125
+set lib_types "$lib_dir/io_std/db_nldm $lib_dir/sram_lp/db_nldm $lib_dir/pll/db_nldm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm
+set ndm_types "$lib_dir/stdcell_rvt/ndm $lib_dir/stdcell_hvt/ndm $lib_dir/sram_lp/ndm $lib_dir/io_std/ndm  $lib_dir/pll/ndm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/ndm  /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/ndm
+set lib_types_target "$lib_dir/stdcell_rvt/db_nldm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm
+# Get just the main standard cells, sram_lp_lps and IOs
+set sub_lib_type "saed32?vt_ saed32sramlp_ saed32io_wb_ saed32pll_"
+saed32?vt_ saed32sramlp_ saed32io_wb_ saed32pll_
+set sub_lib_type_target "saed32rvt_"
+saed32rvt_
+set lef_types [list $lib_dir/stdcell_hvt/lef  $lib_dir/stdcell_rvt/lef $lib_dir/stdcell_lvt/lef $lib_dir/sram_lp/lef/ $lib_dir/io_std/lef $lib_dir/pll/lef ]
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_lvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/lef/ /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/lef
+set sub_lef_type "saed32nm_?vt_*.lef saed32_sram_lp_*.lef saed32io_std_wb saed32_PLL.lef"
+saed32nm_?vt_*.lef saed32_sram_lp_*.lef saed32io_std_wb saed32_PLL.lef
+set mwlib_types [list $lib_dir/stdcell_hvt/milkyway $lib_dir/stdcell_rvt/milkyway $lib_dir/stdcell_lvt/milkyway  $lib_dir/io_std/milkyway $lib_dir/sram_lp/milkyway $lib_dir/pll/milkyway  ]
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_lvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/milkyway
+set sub_mwlib_type "saed32nm_?vt_* SRAM32NM saed32io_wb_* SAED32_PLL_FR*"
+saed32nm_?vt_* SRAM32NM saed32io_wb_* SAED32_PLL_FR*
+#set topdir /u/$env(USER)/PSU_RTL2GDS
+set topdir [ lindex [ regexp -inline "(.*)\(syn\|pt\|apr\)" [pwd] ] 1 ]
+/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/
+set FCL 0
+0
+set split_constraints 0
+0
+Warning: No designs to list. (UID-275)
+== ANALYZE autoread all files ==
+
+Starting ANALYZE autoread mode...
+Warning: Defining design library 'WORK' at directory '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/work/WORK_autoread'. (AUTOREAD-107)
+Information: Adding '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.  (AUTOREAD-100)
+Information: Scanning file { fifo1_srama.sv }. (AUTOREAD-303)
+Compiling source file /u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv
+Presto compilation completed successfully.
+Autoread command completed successfully.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.db'
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.db'
+Loading db file '/pkgs/synopsys/2020/design_compiler/syn/Q-2019.12-SP3/libraries/syn/dw_foundation.sldb'
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.db'
+Loading db file '/pkgs/synopsys/2020/design_compiler/syn/Q-2019.12-SP3/libraries/syn/gtech.db'
+Loading db file '/pkgs/synopsys/2020/design_compiler/syn/Q-2019.12-SP3/libraries/syn/standard.sldb'
+  Loading link library 'saed32io_wb_ss0p95v125c_2p25v'
+  Loading link library 'saed32pll_ss0p95v125c_2p25v'
+  Loading link library 'saed32rvt_ss0p95v125c'
+  Loading link library 'gtech'
+Running PRESTO HDLC
+
+Inferred memory devices in process
+        in routine fifo1_srama line 19 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      wdata_reg      | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (fifo1_srama)
+Elaborated 1 design.
+Current design is now 'fifo1_srama'.
+Information: Building the design 'sync_r2w'. (HDL-193)
+
+Inferred memory devices in process
+        in routine sync_r2w line 145 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    wq2_rptr_reg     | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    wq1_rptr_reg     | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (sync_r2w)
+Information: Building the design 'sync_w2r'. (HDL-193)
+
+Inferred memory devices in process
+        in routine sync_w2r line 156 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    rq2_wptr_reg     | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    rq1_wptr_reg     | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (sync_w2r)
+Information: Building the design 'fifomem' instantiated from design 'fifo1_srama' with
+        the parameters "8,10". (HDL-193)
+Warning:  /u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv:71: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+Warning:  /u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv:86: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 69 in file
+        '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            71            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 84 in file
+        '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            86            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (fifomem_DATASIZE8_ADDRSIZE10)
+Information: Building the design 'rptr_empty' instantiated from design 'fifo1_srama' with
+        the parameters "10". (HDL-193)
+
+Inferred memory devices in process
+        in routine rptr_empty_ADDRSIZE10 line 175 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      rbin_reg       | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+|      rptr_reg       | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+        in routine rptr_empty_ADDRSIZE10 line 186 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     rempty_reg      | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (rptr_empty_ADDRSIZE10)
+Information: Building the design 'wptr_full' instantiated from design 'fifo1_srama' with
+        the parameters "10". (HDL-193)
+
+Inferred memory devices in process
+        in routine wptr_full_ADDRSIZE10 line 203 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      wbin_reg       | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+|      wptr_reg       | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+        in routine wptr_full_ADDRSIZE10 line 218 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      wfull_reg      | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (wptr_full_ADDRSIZE10)
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+#####################################################
+proc insert_io { port side} {
+  set this_io io_${side}_${port}
+  if {  $side == "t"   } {
+   if { [get_attribute [get_ports $port ] direction ] == "in" } {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/I1025_NS
+   } else {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/D8I1025_NS
+   }
+  }
+  if { $side == "b"  } {
+   if { [get_attribute [get_ports $port ] direction ] == "in" } {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/I1025_NS
+   } else {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/D8I1025_NS
+   }
+  }
+  if {  $side == "r"  } {
+   if { [get_attribute [get_ports $port ] direction ] == "in" } {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/I1025_NS
+   } else {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/D8I1025_NS
+   }
+  }
+  if { $side == "l"  } {
+   if { [get_attribute [get_ports $port ] direction ] == "in" } {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/I1025_NS
+   } else {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/D8I1025_NS
+   }
+  }
+  set pins [ get_pins -of_obj [ get_net $port ] ]
+  foreach_in i $pins { disconnect_net [get_net $port ] $i }
+  set port_net [get_nets -quiet $port ]
+
+  # If only a port is created, the related net is not created and connected to the port.  Do that here.
+  if { [sizeof_collection $port_net ] == 0 } { 
+      create_net $port 
+      connect_net $port [get_ports $port ]
+  }
+
+  connect_net [get_net $port ]  $this_io/PADIO
+  create_net ${this_io}_net
+  foreach_in i $pins { connect_net ${this_io}_net $i }
+  #DIN is input to IO_PAD
+  #DOUT is output of IO_PAD
+  #EN is the IO_PAD enable to output
+  if { [get_attribute [get_ports $port ] direction ] == "in" } {
+     #connect_net [get_nets  *Logic0* ] ${this_io}/EN 
+     connect_net [get_nets  *Logic1* ] ${this_io}/R_EN 
+     connect_net ${this_io}_net ${this_io}/DOUT
+  } else {
+     connect_net [get_nets  *Logic1* ] $this_io/EN 
+     #connect_net [get_nets  *Logic0* ] $this_io/R_EN 
+     connect_net ${this_io}_net $this_io/DIN
+  }
+}
+####################################################
+Error: could not open script file "../../fifo1_srama.add_ios.tcl" (CMD-015)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: The specified replacement character (_) is conflicting with the specified allowed or restricted character.   (UCN-4)
+if { [info exists synopsys_program_name ] && ($synopsys_program_name == "icc2_shell") } {
+    puts " Creating ICC2 MCMM "
+    create_mode func
+    create_corner slow
+    create_scenario -mode func -corner slow -name func_slow
+    current_scenario func_slow
+    set_operating_conditions ss0p75v125c
+    set_operating conditions ss0p75v125c_i0p75v
+    read_parasitic_tech -tlup $tlu_dir/saed32nm_1p9m_Cmax.tluplus -layermap $tlu_dir/saed32nm_tf_itf_tluplus.map -name Cmax
+    read_parasitic_tech -tlup $tlu_dir/saed32nm_1p9m_Cmin.tluplus -layermap $tlu_dir/saed32nm_tf_itf_tluplus.map -name Cmin
+    set_parasitic_parameters -early_spec Cmax -early_temperature 125
+    set_parasitic_parameters -late_spec Cmax -late_temperature 125
+    #set_parasitic_parameters -early_spec 1p9m_Cmax -early_temperature 125 -corner default
+    #set_parasitic_parameters -late_spec 1p9m_Cmax -late_temperature 125 -corner default
+
+    #set_scenario_status  default -active false
+    set_scenario_status func_slow -active true -hold true -setup true
+}
+set wclk_period 2.0
+2.0
+set rclk_period 2.0
+2.0
+set wclk2x_period [ expr $wclk_period / 2 ]
+1.0
+create_clock -name "wclk" -period $wclk_period  wclk
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+create_clock -name "rclk" -period $rclk_period rclk
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+#Add the new clock.  Make it 1/2 the wclk period since it is called wclk2x
+create_clock -name "wclk2x" -period $wclk2x_period wclk2x
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+set_false_path -from [get_clocks wclk ] -to [get_clocks rclk]
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+set_false_path -from [get_clocks rclk ] -to [ get_clocks wclk]
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+# Add input/output delays in relation to related clocks
+# Can tell the related clock by doing report_timing -group INPUTS  or -group OUTPUTS after using group_path
+# External delay should be some percentage of clock period.
+# Tune/relax if violating; most concerned about internal paths.
+# I like set_driving_cell to a std cell from the library.  set_drive works to.
+# set_load
+#group_path -name INTERNAL -from [all_clocks] -to [all_clocks ]
+group_path -name INPUTS -from [ get_ports -filter "direction==in&&full_name!~*clk*" ]
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+group_path -name OUTPUTS -to [ get_ports -filter "direction==out" ]
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+Current design is 'fifo1_srama'.
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Information: Performing power optimization. (PWR-850)
+Alib files are up-to-date.
+Information: Choosing a test methodology will restrict the optimization of sequential cells. (UIO-12)
+Information: Evaluating DesignWare library utilization. (UISN-27)
+
+============================================================================
+| DesignWare Building Block Library  |         Version         | Available |
+============================================================================
+| Basic DW Building Blocks           | Q-2019.12-DWBB_201912.3 |     *     |
+| Licensed DW Building Blocks        | Q-2019.12-DWBB_201912.3 |     *     |
+============================================================================
+
+Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
+
+Information: There are 68 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+  Simplifying Design 'fifo1_srama'
+
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'SRAMLP2RW128x8' in 'fifomem_DATASIZE8_ADDRSIZE10'. (LINK-5)
+Loaded alib file './alib-52/saed32rvt_ss0p95v125c.db.alib'
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'fifomem_DATASIZE8_ADDRSIZE10'
+  Processing 'wptr_full_ADDRSIZE10'
+Information: Added key list 'DesignWare' to design 'wptr_full_ADDRSIZE10'. (DDB-72)
+Information: In design 'wptr_full_ADDRSIZE10', the register 'wptr_reg_10_' is removed because it is merged to 'wbin_reg_10_'. (OPT-1215)
+ Implement Synthetic for 'wptr_full_ADDRSIZE10'.
+  Processing 'rptr_empty_ADDRSIZE10'
+Information: Added key list 'DesignWare' to design 'rptr_empty_ADDRSIZE10'. (DDB-72)
+Information: In design 'rptr_empty_ADDRSIZE10', the register 'rptr_reg_10_' is removed because it is merged to 'rbin_reg_10_'. (OPT-1215)
+ Implement Synthetic for 'rptr_empty_ADDRSIZE10'.
+  Processing 'fifo1_srama'
+  Processing 'sync_w2r'
+  Processing 'sync_r2w'
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'SRAMLP2RW128x8' in 'fifomem_DATASIZE8_ADDRSIZE10'. (LINK-5)
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: The library cell 'PMT3_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'PMT2_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'PMT1_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT3_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT2_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT1_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+Information: Automatic shift-register identification is enabled for scan. Not all registers will be scan-replaced. (OPT-467)
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Mapping Optimizations  (Ultra High effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:18:54    1289.5      0.00       0.0       0.0                           92636448.0000
+    0:18:54    1289.5      0.00       0.0       0.0                           92636448.0000
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Constant Register Removal
+  -----------------------------------
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Global Optimizations
+  ------------------------------
+  Numerical Synthesis (Phase 1)
+  Numerical Synthesis (Phase 2)
+  Global Optimization (Phase 1)
+  Global Optimization (Phase 2)
+  Global Optimization (Phase 3)
+  Global Optimization (Phase 4)
+  Global Optimization (Phase 5)
+  Global Optimization (Phase 6)
+  Global Optimization (Phase 7)
+  Global Optimization (Phase 8)
+  Global Optimization (Phase 9)
+  Global Optimization (Phase 10)
+  Global Optimization (Phase 11)
+  Global Optimization (Phase 12)
+  Global Optimization (Phase 13)
+  Global Optimization (Phase 14)
+  Global Optimization (Phase 15)
+  Global Optimization (Phase 16)
+  Global Optimization (Phase 17)
+  Global Optimization (Phase 18)
+  Global Optimization (Phase 19)
+  Global Optimization (Phase 20)
+  Global Optimization (Phase 21)
+  Global Optimization (Phase 22)
+  Global Optimization (Phase 23)
+  Global Optimization (Phase 24)
+  Global Optimization (Phase 25)
+  Global Optimization (Phase 26)
+  Global Optimization (Phase 27)
+  Global Optimization (Phase 28)
+  Global Optimization (Phase 29)
+  Global Optimization (Phase 30)
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Isolate Ports
+  -----------------------
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Delay Optimization
+  ----------------------------
+    0:18:54    1199.3      0.00       0.0       0.0                           68681616.0000
+    0:18:54    1199.3      0.00       0.0       0.0                           68681616.0000
+    0:18:54    1199.3      0.00       0.0       0.0                           68681616.0000
+    0:18:54    1199.3      0.00       0.0       0.0                           68681616.0000
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+    0:18:54    1186.6      0.00       0.0       0.0                           68574328.0000
+    0:18:55    1186.6      0.00       0.0       0.0                           68574328.0000
+
+  Beginning WLM Backend Optimization
+  --------------------------------------
+    0:18:55    1185.3      0.00       0.0       0.0                           68548288.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68548288.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68548288.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+
+  Beginning Leakage Power Optimization  (max_leakage_power 0)
+  ------------------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:18:55    1185.3      0.00       0.0       0.0                           68283120.0000
+  Global Optimization (Phase 31)
+  Global Optimization (Phase 32)
+  Global Optimization (Phase 33)
+  Global Optimization (Phase 34)
+  Global Optimization (Phase 35)
+  Global Optimization (Phase 36)
+  Global Optimization (Phase 37)
+  Global Optimization (Phase 38)
+  Global Optimization (Phase 39)
+  Global Optimization (Phase 40)
+  Global Optimization (Phase 41)
+  Global Optimization (Phase 42)
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+    0:18:55    1185.3      0.00       0.0       0.0                           67111976.0000
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.db'
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.db'
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'SRAMLP2RW128x8' in 'fifomem_DATASIZE8_ADDRSIZE10'. (LINK-5)
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated black box outputs. (PWR-428)
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'SRAMLP2RW128x8' in 'fifomem_DATASIZE8_ADDRSIZE10'. (LINK-5)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Writing verilog file '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/outputs/fifo1_srama.dc.vg'.
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Writing ddc file '../outputs/fifo1_srama.dc.ddc'.
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+dc_shell> report_timing
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : fifo1_srama
+Version: Q-2019.12-SP3
+Date   : Tue Jan 24 15:58:37 2023
+****************************************
+
+Operating Conditions: ss0p95v125c   Library: saed32rvt_ss0p95v125c
+Wire Load Model Mode: enclosed
+
+  Startpoint: rptr_empty/rbin_reg_0_
+              (rising edge-triggered flip-flop clocked by rclk)
+  Endpoint: rptr_empty/rempty_reg
+            (rising edge-triggered flip-flop clocked by rclk)
+  Path Group: rclk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  fifo1_srama        8000                  saed32rvt_ss0p95v125c
+  rptr_empty_ADDRSIZE10
+                     8000                  saed32rvt_ss0p95v125c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock rclk (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  rptr_empty/rbin_reg_0_/CLK (SDFFARX1_RVT)               0.00       0.00 r
+  rptr_empty/rbin_reg_0_/Q (SDFFARX1_RVT)                 0.17       0.17 r
+  rptr_empty/U30/Y (NAND3X0_RVT)                          0.06       0.23 f
+  rptr_empty/U14/Y (INVX0_RVT)                            0.04       0.27 r
+  rptr_empty/U31/Y (NAND2X0_RVT)                          0.04       0.32 f
+  rptr_empty/U15/Y (INVX0_RVT)                            0.04       0.35 r
+  rptr_empty/U32/Y (NAND2X0_RVT)                          0.04       0.39 f
+  rptr_empty/U16/Y (INVX0_RVT)                            0.04       0.43 r
+  rptr_empty/U33/Y (NAND2X0_RVT)                          0.04       0.47 f
+  rptr_empty/U17/Y (INVX0_RVT)                            0.04       0.51 r
+  rptr_empty/U34/Y (NAND2X0_RVT)                          0.04       0.55 f
+  rptr_empty/U18/Y (INVX0_RVT)                            0.04       0.58 r
+  rptr_empty/U35/Y (NAND2X0_RVT)                          0.05       0.63 f
+  rptr_empty/U8/Y (INVX0_RVT)                             0.04       0.67 r
+  rptr_empty/U36/Y (AND2X1_RVT)                           0.05       0.73 r
+  rptr_empty/U37/Y (NAND2X0_RVT)                          0.04       0.77 f
+  rptr_empty/U19/Y (INVX0_RVT)                            0.04       0.80 r
+  rptr_empty/U38/Y (NAND2X0_RVT)                          0.04       0.85 f
+  rptr_empty/U20/Y (INVX0_RVT)                            0.04       0.89 r
+  rptr_empty/U39/Y (AND2X1_RVT)                           0.05       0.94 r
+  rptr_empty/U40/SO (HADDX1_RVT)                          0.10       1.05 f
+  rptr_empty/U9/Y (INVX0_RVT)                             0.04       1.09 r
+  rptr_empty/U56/Y (OA22X1_RVT)                           0.07       1.16 r
+  rptr_empty/U73/Y (OAI22X1_RVT)                          0.08       1.24 f
+  rptr_empty/U74/Y (AO221X1_RVT)                          0.05       1.30 f
+  rptr_empty/U75/Y (NOR4X1_RVT)                           0.09       1.39 r
+  rptr_empty/rempty_reg/D (SDFFASX1_RVT)                  0.00       1.39 r
+  data arrival time                                                  1.39
+
+  clock rclk (rise edge)                                  2.00       2.00
+  clock network delay (ideal)                             0.00       2.00
+  rptr_empty/rempty_reg/CLK (SDFFASX1_RVT)                0.00       2.00 r
+  library setup time                                     -0.13       1.87
+  data required time                                                 1.87
+  --------------------------------------------------------------------------
+  data required time                                                 1.87
+  data arrival time                                                 -1.39
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.49
+
+
+  Startpoint: wptr_full/wbin_reg_0_
+              (rising edge-triggered flip-flop clocked by wclk)
+  Endpoint: wptr_full/wfull_reg
+            (rising edge-triggered flip-flop clocked by wclk)
+  Path Group: wclk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  fifo1_srama        8000                  saed32rvt_ss0p95v125c
+  wptr_full_ADDRSIZE10
+                     8000                  saed32rvt_ss0p95v125c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock wclk (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  wptr_full/wbin_reg_0_/CLK (SDFFARX1_RVT)                0.00       0.00 r
+  wptr_full/wbin_reg_0_/Q (SDFFARX1_RVT)                  0.17       0.17 r
+  wptr_full/U29/Y (NAND3X0_RVT)                           0.06       0.23 f
+  wptr_full/U12/Y (INVX0_RVT)                             0.04       0.27 r
+  wptr_full/U30/Y (NAND2X0_RVT)                           0.04       0.32 f
+  wptr_full/U13/Y (INVX0_RVT)                             0.04       0.35 r
+  wptr_full/U31/Y (NAND2X0_RVT)                           0.04       0.39 f
+  wptr_full/U14/Y (INVX0_RVT)                             0.04       0.43 r
+  wptr_full/U32/Y (NAND2X0_RVT)                           0.04       0.47 f
+  wptr_full/U15/Y (INVX0_RVT)                             0.04       0.51 r
+  wptr_full/U33/Y (NAND2X0_RVT)                           0.04       0.55 f
+  wptr_full/U16/Y (INVX0_RVT)                             0.04       0.58 r
+  wptr_full/U34/Y (NAND2X0_RVT)                           0.04       0.62 f
+  wptr_full/U17/Y (INVX0_RVT)                             0.04       0.66 r
+  wptr_full/U35/Y (NAND2X0_RVT)                           0.04       0.70 f
+  wptr_full/U18/Y (INVX0_RVT)                             0.04       0.74 r
+  wptr_full/U36/Y (NAND2X0_RVT)                           0.04       0.78 f
+  wptr_full/U19/Y (INVX0_RVT)                             0.04       0.82 r
+  wptr_full/U37/Y (NAND2X0_RVT)                           0.04       0.86 f
+  wptr_full/U20/Y (INVX0_RVT)                             0.04       0.90 r
+  wptr_full/U38/Y (AND2X1_RVT)                            0.05       0.96 r
+  wptr_full/U39/SO (HADDX1_RVT)                           0.11       1.07 f
+  wptr_full/U50/Y (AO22X1_RVT)                            0.07       1.14 f
+  wptr_full/U71/Y (OAI22X1_RVT)                           0.10       1.23 r
+  wptr_full/U72/Y (AO221X1_RVT)                           0.07       1.30 r
+  wptr_full/U73/Y (NOR4X1_RVT)                            0.09       1.39 f
+  wptr_full/wfull_reg/D (SDFFARX1_RVT)                    0.00       1.39 f
+  data arrival time                                                  1.39
+
+  clock wclk (rise edge)                                  2.00       2.00
+  clock network delay (ideal)                             0.00       2.00
+  wptr_full/wfull_reg/CLK (SDFFARX1_RVT)                  0.00       2.00 r
+  library setup time                                     -0.12       1.88
+  data required time                                                 1.88
+  --------------------------------------------------------------------------
+  data required time                                                 1.88
+  data arrival time                                                 -1.39
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.49
+
+
+1
+dc_shell> gui_start
+Current design is 'fifo1_srama'.
+4.1
+Current design is 'fifo1_srama'.
+dc_shell> 
+Loading db file '/pkgs/synopsys/2020/design_compiler/syn/Q-2019.12-SP3/libraries/syn/generic.sdb'
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+dc_shell> report_constraint -all_violators
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : constraint
+        -all_violators
+Design : fifo1_srama
+Version: Q-2019.12-SP3
+Date   : Tue Jan 24 16:05:06 2023
+****************************************
+
+
+   max_leakage_power
+
+                             Required        Actual
+   Design                   Leakage Power  Leakage Power     Slack
+   -----------------------------------------------------------------
+   fifo1_srama                  0.00       73960720.00    -73960720.00
+                                                                    (VIOLATED)
+
+
+1
+dc_shell> report_timing
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : fifo1_srama
+Version: Q-2019.12-SP3
+Date   : Tue Jan 24 16:06:19 2023
+****************************************
+
+Operating Conditions: ss0p95v125c   Library: saed32rvt_ss0p95v125c
+Wire Load Model Mode: enclosed
+
+  Startpoint: rptr_empty/rbin_reg_0_
+              (rising edge-triggered flip-flop clocked by rclk)
+  Endpoint: rptr_empty/rempty_reg
+            (rising edge-triggered flip-flop clocked by rclk)
+  Path Group: rclk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  fifo1_srama        8000                  saed32rvt_ss0p95v125c
+  rptr_empty_ADDRSIZE10
+                     8000                  saed32rvt_ss0p95v125c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock rclk (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  rptr_empty/rbin_reg_0_/CLK (SDFFARX1_RVT)               0.00       0.00 r
+  rptr_empty/rbin_reg_0_/Q (SDFFARX1_RVT)                 0.17       0.17 r
+  rptr_empty/U30/Y (NAND3X0_RVT)                          0.06       0.23 f
+  rptr_empty/U14/Y (INVX0_RVT)                            0.04       0.27 r
+  rptr_empty/U31/Y (NAND2X0_RVT)                          0.04       0.32 f
+  rptr_empty/U15/Y (INVX0_RVT)                            0.04       0.35 r
+  rptr_empty/U32/Y (NAND2X0_RVT)                          0.04       0.39 f
+  rptr_empty/U16/Y (INVX0_RVT)                            0.04       0.43 r
+  rptr_empty/U33/Y (NAND2X0_RVT)                          0.04       0.47 f
+  rptr_empty/U17/Y (INVX0_RVT)                            0.04       0.51 r
+  rptr_empty/U34/Y (NAND2X0_RVT)                          0.04       0.55 f
+  rptr_empty/U18/Y (INVX0_RVT)                            0.04       0.58 r
+  rptr_empty/U35/Y (NAND2X0_RVT)                          0.05       0.63 f
+  rptr_empty/U8/Y (INVX0_RVT)                             0.04       0.67 r
+  rptr_empty/U36/Y (AND2X1_RVT)                           0.05       0.73 r
+  rptr_empty/U37/Y (NAND2X0_RVT)                          0.04       0.77 f
+  rptr_empty/U19/Y (INVX0_RVT)                            0.04       0.80 r
+  rptr_empty/U38/Y (NAND2X0_RVT)                          0.04       0.85 f
+  rptr_empty/U20/Y (INVX0_RVT)                            0.04       0.89 r
+  rptr_empty/U39/Y (AND2X1_RVT)                           0.05       0.94 r
+  rptr_empty/U40/SO (HADDX1_RVT)                          0.10       1.05 f
+  rptr_empty/U9/Y (INVX0_RVT)                             0.04       1.09 r
+  rptr_empty/U56/Y (OA22X1_RVT)                           0.07       1.16 r
+  rptr_empty/U73/Y (OAI22X1_RVT)                          0.08       1.24 f
+  rptr_empty/U74/Y (AO221X1_RVT)                          0.05       1.30 f
+  rptr_empty/U75/Y (NOR4X1_RVT)                           0.09       1.39 r
+  rptr_empty/rempty_reg/D (SDFFASX1_RVT)                  0.00       1.39 r
+  data arrival time                                                  1.39
+
+  clock rclk (rise edge)                                  2.00       2.00
+  clock network delay (ideal)                             0.00       2.00
+  rptr_empty/rempty_reg/CLK (SDFFASX1_RVT)                0.00       2.00 r
+  library setup time                                     -0.13       1.87
+  data required time                                                 1.87
+  --------------------------------------------------------------------------
+  data required time                                                 1.87
+  data arrival time                                                 -1.39
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.49
+
+
+  Startpoint: wptr_full/wbin_reg_0_
+              (rising edge-triggered flip-flop clocked by wclk)
+  Endpoint: wptr_full/wfull_reg
+            (rising edge-triggered flip-flop clocked by wclk)
+  Path Group: wclk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  fifo1_srama        8000                  saed32rvt_ss0p95v125c
+  wptr_full_ADDRSIZE10
+                     8000                  saed32rvt_ss0p95v125c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock wclk (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  wptr_full/wbin_reg_0_/CLK (SDFFARX1_RVT)                0.00       0.00 r
+  wptr_full/wbin_reg_0_/Q (SDFFARX1_RVT)                  0.17       0.17 r
+  wptr_full/U29/Y (NAND3X0_RVT)                           0.06       0.23 f
+  wptr_full/U12/Y (INVX0_RVT)                             0.04       0.27 r
+  wptr_full/U30/Y (NAND2X0_RVT)                           0.04       0.32 f
+  wptr_full/U13/Y (INVX0_RVT)                             0.04       0.35 r
+  wptr_full/U31/Y (NAND2X0_RVT)                           0.04       0.39 f
+  wptr_full/U14/Y (INVX0_RVT)                             0.04       0.43 r
+  wptr_full/U32/Y (NAND2X0_RVT)                           0.04       0.47 f
+  wptr_full/U15/Y (INVX0_RVT)                             0.04       0.51 r
+  wptr_full/U33/Y (NAND2X0_RVT)                           0.04       0.55 f
+  wptr_full/U16/Y (INVX0_RVT)                             0.04       0.58 r
+  wptr_full/U34/Y (NAND2X0_RVT)                           0.04       0.62 f
+  wptr_full/U17/Y (INVX0_RVT)                             0.04       0.66 r
+  wptr_full/U35/Y (NAND2X0_RVT)                           0.04       0.70 f
+  wptr_full/U18/Y (INVX0_RVT)                             0.04       0.74 r
+  wptr_full/U36/Y (NAND2X0_RVT)                           0.04       0.78 f
+  wptr_full/U19/Y (INVX0_RVT)                             0.04       0.82 r
+  wptr_full/U37/Y (NAND2X0_RVT)                           0.04       0.86 f
+  wptr_full/U20/Y (INVX0_RVT)                             0.04       0.90 r
+  wptr_full/U38/Y (AND2X1_RVT)                            0.05       0.96 r
+  wptr_full/U39/SO (HADDX1_RVT)                           0.11       1.07 f
+  wptr_full/U50/Y (AO22X1_RVT)                            0.07       1.14 f
+  wptr_full/U71/Y (OAI22X1_RVT)                           0.10       1.23 r
+  wptr_full/U72/Y (AO221X1_RVT)                           0.07       1.30 r
+  wptr_full/U73/Y (NOR4X1_RVT)                            0.09       1.39 f
+  wptr_full/wfull_reg/D (SDFFARX1_RVT)                    0.00       1.39 f
+  data arrival time                                                  1.39
+
+  clock wclk (rise edge)                                  2.00       2.00
+  clock network delay (ideal)                             0.00       2.00
+  wptr_full/wfull_reg/CLK (SDFFARX1_RVT)                  0.00       2.00 r
+  library setup time                                     -0.12       1.88
+  data required time                                                 1.88
+  --------------------------------------------------------------------------
+  data required time                                                 1.88
+  data arrival time                                                 -1.39
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.49
+
+
+1
+dc_shell> report_timing -from wptr_full/wfull_reg -to wfull
+Warning: Can't find object 'wptr_full/wfull_reg' in design 'fifo1_srama'. (UID-95)
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+0
+dc_shell> report_timing -from wptr_full/wfull_reg -to wfull
+Warning: Can't find object 'wptr_full/wfull_reg' in design 'fifo1_srama'. (UID-95)
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+0
+dc_shell> report_timing -from  wfull_reg -to wfull
+Warning: Can't find object 'wfull_reg' in design 'fifo1_srama'. (UID-95)
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+0
+dc_shell> set top_design fifo1_srama
+fifo1_srama
+dc_shell> source ../scripts/dc.tcl
+set lib_dir /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib
+# Decoder ring for the libraries
+# You will need to follow another example or look in the library directories to understand.
+# lib_types is used for the dc/dct linking variables and ICC2 NDM lcoations.
+# /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/db_nldm
+# /          $lib_dir                   /lib/ $lib_type /db_nldm
+# link_library, Target_library use the sub_lib_types and corner variables. 
+# For sub_lib_types and corner:
+# Example:
+#     saed32hvt_ss0p75v125c.db
+#     |sub_lib  corner    .db
+# The current flow tries to find all sub_lib and all corners in all the search paths.  Any match will be put in the library list.
+# Wild cards can be used, but be careful.  Multiple matches can occur in ways you don't want.
+# For the target library, the same method is used as the link library except only HVT and RVT lib_types are used.
+# ICC2 NDM choosing also uses the sub_lib_types so that only the required libraries and extras are not loaded.
+# fifo1
+#set top_design fifo1
+set add_ios 1
+1
+set pad_design 1
+1
+set design_size { 580 580  } 
+ 580 580  
+set design_io_border 310
+310
+set dc_floorplanning 1
+1
+set enable_dft 0
+0
+set innovus_enable_manual_macro_placement 0
+0
+set rtl_list [list ../rtl/$top_design.sv ]
+../rtl/fifo1_srama.sv
+set slow_corner "ss0p95v125c_2p25v ss0p95v125c"
+ss0p95v125c_2p25v ss0p95v125c
+set fast_corner "ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c"
+ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c
+set synth_corners $slow_corner
+ss0p95v125c_2p25v ss0p95v125c
+set synth_corners_target "ss0p95v125c" 
+ss0p95v125c
+#set synth_corners_target "ss0p95v125c" 
+set synth_corners_slow $slow_corner
+ss0p95v125c_2p25v ss0p95v125c
+set synth_corners_fast $fast_corner
+ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c
+set slow_metal Cmax_125
+Cmax_125
+set fast_metal Cmax_125
+Cmax_125
+set lib_types "$lib_dir/io_std/db_nldm $lib_dir/sram_lp/db_nldm $lib_dir/pll/db_nldm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm
+set ndm_types "$lib_dir/stdcell_rvt/ndm $lib_dir/stdcell_hvt/ndm $lib_dir/sram_lp/ndm $lib_dir/io_std/ndm  $lib_dir/pll/ndm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/ndm  /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/ndm
+set lib_types_target "$lib_dir/stdcell_rvt/db_nldm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm
+# Get just the main standard cells, sram_lp_lps and IOs
+set sub_lib_type "saed32?vt_ saed32sramlp_ saed32io_wb_ saed32pll_"
+saed32?vt_ saed32sramlp_ saed32io_wb_ saed32pll_
+set sub_lib_type_target "saed32rvt_"
+saed32rvt_
+set lef_types [list $lib_dir/stdcell_hvt/lef  $lib_dir/stdcell_rvt/lef $lib_dir/stdcell_lvt/lef $lib_dir/sram_lp/lef/ $lib_dir/io_std/lef $lib_dir/pll/lef ]
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_lvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/lef/ /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/lef
+set sub_lef_type "saed32nm_?vt_*.lef saed32_sram_lp_*.lef saed32io_std_wb saed32_PLL.lef"
+saed32nm_?vt_*.lef saed32_sram_lp_*.lef saed32io_std_wb saed32_PLL.lef
+set mwlib_types [list $lib_dir/stdcell_hvt/milkyway $lib_dir/stdcell_rvt/milkyway $lib_dir/stdcell_lvt/milkyway  $lib_dir/io_std/milkyway $lib_dir/sram_lp/milkyway $lib_dir/pll/milkyway  ]
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_lvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/milkyway
+set sub_mwlib_type "saed32nm_?vt_* SRAM32NM saed32io_wb_* SAED32_PLL_FR*"
+saed32nm_?vt_* SRAM32NM saed32io_wb_* SAED32_PLL_FR*
+#set topdir /u/$env(USER)/PSU_RTL2GDS
+set topdir [ lindex [ regexp -inline "(.*)\(syn\|pt\|apr\)" [pwd] ] 1 ]
+/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/
+set FCL 0
+0
+set split_constraints 0
+0
+fifo1_srama (*)                 sync_r2w
+fifomem_DATASIZE8_ADDRSIZE10    sync_w2r
+rptr_empty_ADDRSIZE10           wptr_full_ADDRSIZE10
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Removing design 'fifomem_DATASIZE8_ADDRSIZE10'
+Removing design 'wptr_full_ADDRSIZE10'
+Removing design 'rptr_empty_ADDRSIZE10'
+Removing design 'fifo1_srama'
+Removing design 'sync_w2r'
+Removing design 'sync_r2w'
+== ANALYZE autoread all files ==
+
+Starting ANALYZE autoread mode...
+Information: HDL source file fifo1_srama.sv is out-of-date. (AUTOREAD-300)
+Compiling source file /u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv
+Presto compilation completed successfully.
+Autoread command completed successfully.
+Running PRESTO HDLC
+
+Inferred memory devices in process
+        in routine fifo1_srama line 19 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      wdata_reg      | Flip-flop |   8   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (fifo1_srama)
+Elaborated 1 design.
+Current design is now 'fifo1_srama'.
+Information: Building the design 'sync_r2w'. (HDL-193)
+
+Inferred memory devices in process
+        in routine sync_r2w line 145 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    wq2_rptr_reg     | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    wq1_rptr_reg     | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (sync_r2w)
+Information: Building the design 'sync_w2r'. (HDL-193)
+
+Inferred memory devices in process
+        in routine sync_w2r line 156 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|    rq2_wptr_reg     | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+|    rq1_wptr_reg     | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (sync_w2r)
+Information: Building the design 'fifomem' instantiated from design 'fifo1_srama' with
+        the parameters "8,10". (HDL-193)
+Warning:  /u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv:71: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+Warning:  /u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv:86: DEFAULT branch of CASE statement cannot be reached. (ELAB-311)
+
+Statistics for case statements in always block at line 69 in file
+        '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            71            |    auto/auto     |
+===============================================
+
+Statistics for case statements in always block at line 84 in file
+        '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'
+===============================================
+|           Line           |  full/ parallel  |
+===============================================
+|            86            |    auto/auto     |
+===============================================
+Presto compilation completed successfully. (fifomem_DATASIZE8_ADDRSIZE10)
+Information: Building the design 'rptr_empty' instantiated from design 'fifo1_srama' with
+        the parameters "10". (HDL-193)
+
+Inferred memory devices in process
+        in routine rptr_empty_ADDRSIZE10 line 175 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      rbin_reg       | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+|      rptr_reg       | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+        in routine rptr_empty_ADDRSIZE10 line 186 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|     rempty_reg      | Flip-flop |   1   |  N  | N  | N  | Y  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (rptr_empty_ADDRSIZE10)
+Information: Building the design 'wptr_full' instantiated from design 'fifo1_srama' with
+        the parameters "10". (HDL-193)
+
+Inferred memory devices in process
+        in routine wptr_full_ADDRSIZE10 line 203 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      wbin_reg       | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+|      wptr_reg       | Flip-flop |  11   |  Y  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+
+Inferred memory devices in process
+        in routine wptr_full_ADDRSIZE10 line 218 in file
+                '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/rtl/fifo1_srama.sv'.
+===============================================================================
+|    Register Name    |   Type    | Width | Bus | MB | AR | AS | SR | SS | ST |
+===============================================================================
+|      wfull_reg      | Flip-flop |   1   |  N  | N  | Y  | N  | N  | N  | N  |
+===============================================================================
+Presto compilation completed successfully. (wptr_full_ADDRSIZE10)
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+#####################################################
+proc insert_io { port side} {
+  set this_io io_${side}_${port}
+  if {  $side == "t"   } {
+   if { [get_attribute [get_ports $port ] direction ] == "in" } {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/I1025_NS
+   } else {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/D8I1025_NS
+   }
+  }
+  if { $side == "b"  } {
+   if { [get_attribute [get_ports $port ] direction ] == "in" } {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/I1025_NS
+   } else {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/D8I1025_NS
+   }
+  }
+  if {  $side == "r"  } {
+   if { [get_attribute [get_ports $port ] direction ] == "in" } {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/I1025_NS
+   } else {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/D8I1025_NS
+   }
+  }
+  if { $side == "l"  } {
+   if { [get_attribute [get_ports $port ] direction ] == "in" } {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/I1025_NS
+   } else {
+    create_cell $this_io saed32io_wb_ss0p95v125c_2p25v/D8I1025_NS
+   }
+  }
+  set pins [ get_pins -of_obj [ get_net $port ] ]
+  foreach_in i $pins { disconnect_net [get_net $port ] $i }
+  set port_net [get_nets -quiet $port ]
+
+  # If only a port is created, the related net is not created and connected to the port.  Do that here.
+  if { [sizeof_collection $port_net ] == 0 } { 
+      create_net $port 
+      connect_net $port [get_ports $port ]
+  }
+
+  connect_net [get_net $port ]  $this_io/PADIO
+  create_net ${this_io}_net
+  foreach_in i $pins { connect_net ${this_io}_net $i }
+  #DIN is input to IO_PAD
+  #DOUT is output of IO_PAD
+  #EN is the IO_PAD enable to output
+  if { [get_attribute [get_ports $port ] direction ] == "in" } {
+     #connect_net [get_nets  *Logic0* ] ${this_io}/EN 
+     connect_net [get_nets  *Logic1* ] ${this_io}/R_EN 
+     connect_net ${this_io}_net ${this_io}/DOUT
+  } else {
+     connect_net [get_nets  *Logic1* ] $this_io/EN 
+     #connect_net [get_nets  *Logic0* ] $this_io/R_EN 
+     connect_net ${this_io}_net $this_io/DIN
+  }
+}
+####################################################
+Error: could not open script file "../../fifo1_srama.add_ios.tcl" (CMD-015)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+if { [info exists synopsys_program_name ] && ($synopsys_program_name == "icc2_shell") } {
+    puts " Creating ICC2 MCMM "
+    create_mode func
+    create_corner slow
+    create_scenario -mode func -corner slow -name func_slow
+    current_scenario func_slow
+    set_operating_conditions ss0p75v125c
+    set_operating conditions ss0p75v125c_i0p75v
+    read_parasitic_tech -tlup $tlu_dir/saed32nm_1p9m_Cmax.tluplus -layermap $tlu_dir/saed32nm_tf_itf_tluplus.map -name Cmax
+    read_parasitic_tech -tlup $tlu_dir/saed32nm_1p9m_Cmin.tluplus -layermap $tlu_dir/saed32nm_tf_itf_tluplus.map -name Cmin
+    set_parasitic_parameters -early_spec Cmax -early_temperature 125
+    set_parasitic_parameters -late_spec Cmax -late_temperature 125
+    #set_parasitic_parameters -early_spec 1p9m_Cmax -early_temperature 125 -corner default
+    #set_parasitic_parameters -late_spec 1p9m_Cmax -late_temperature 125 -corner default
+
+    #set_scenario_status  default -active false
+    set_scenario_status func_slow -active true -hold true -setup true
+}
+set wclk_period 2.0
+2.0
+set rclk_period 2.0
+2.0
+set wclk2x_period [ expr $wclk_period / 2 ]
+1.0
+create_clock -name "wclk" -period $wclk_period  wclk
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+create_clock -name "rclk" -period $rclk_period rclk
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+#Add the new clock.  Make it 1/2 the wclk period since it is called wclk2x
+create_clock -name "wclk2x" -period $wclk2x_period wclk2x
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+set_false_path -from [get_clocks wclk ] -to [get_clocks rclk]
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+set_false_path -from [get_clocks rclk ] -to [ get_clocks wclk]
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+# Add input/output delays in relation to related clocks
+# Can tell the related clock by doing report_timing -group INPUTS  or -group OUTPUTS after using group_path
+# External delay should be some percentage of clock period.
+# Tune/relax if violating; most concerned about internal paths.
+# I like set_driving_cell to a std cell from the library.  set_drive works to.
+# set_load
+#group_path -name INTERNAL -from [all_clocks] -to [all_clocks ]
+group_path -name INPUTS -from [ get_ports -filter "direction==in&&full_name!~*clk*" ]
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+group_path -name OUTPUTS -to [ get_ports -filter "direction==out" ]
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+Current design is 'fifo1_srama'.
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Information: Performing power optimization. (PWR-850)
+Alib files are up-to-date.
+Warning: "The variable 'compile_high_effort_area_in_incremental' is supported in DC NXT only. Ignoring this setting." (OPT-1726)
+Information: Choosing a test methodology will restrict the optimization of sequential cells. (UIO-12)
+Information: Sequential output inversion is enabled.  SVF file must be used for formal verification. (OPT-1208)
+
+Information: There are 68 potential problems in your design. Please run 'check_design' for more information. (LINT-99)
+
+  Simplifying Design 'fifo1_srama'
+
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'SRAMLP2RW128x8' in 'fifomem_DATASIZE8_ADDRSIZE10'. (LINK-5)
+Loaded alib file './alib-52/saed32rvt_ss0p95v125c.db.alib'
+Information: State dependent leakage is now switched from on to off.
+
+  Beginning Pass 1 Mapping
+  ------------------------
+  Processing 'fifomem_DATASIZE8_ADDRSIZE10'
+  Processing 'wptr_full_ADDRSIZE10'
+Information: Added key list 'DesignWare' to design 'wptr_full_ADDRSIZE10'. (DDB-72)
+Information: In design 'wptr_full_ADDRSIZE10', the register 'wptr_reg_10_' is removed because it is merged to 'wbin_reg_10_'. (OPT-1215)
+ Implement Synthetic for 'wptr_full_ADDRSIZE10'.
+  Processing 'rptr_empty_ADDRSIZE10'
+Information: Added key list 'DesignWare' to design 'rptr_empty_ADDRSIZE10'. (DDB-72)
+Information: In design 'rptr_empty_ADDRSIZE10', the register 'rptr_reg_10_' is removed because it is merged to 'rbin_reg_10_'. (OPT-1215)
+ Implement Synthetic for 'rptr_empty_ADDRSIZE10'.
+  Processing 'fifo1_srama'
+  Processing 'sync_w2r'
+  Processing 'sync_r2w'
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'SRAMLP2RW128x8' in 'fifomem_DATASIZE8_ADDRSIZE10'. (LINK-5)
+
+  Updating timing information
+Information: Updating design information... (UID-85)
+Information: The library cell 'PMT3_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'PMT2_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'PMT1_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT3_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT2_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The library cell 'NMT1_RVT' in the library 'saed32rvt_ss0p95v125c' is not characterized for internal power. (PWR-536)
+Information: The target library(s) contains cell(s), other than black boxes, that are not characterized for internal power. (PWR-24)
+Information: Automatic shift-register identification is enabled for scan. Not all registers will be scan-replaced. (OPT-467)
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Mapping Optimizations  (Ultra High effort)
+  -------------------------------
+  Mapping Optimization (Phase 1)
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:35:16    1289.5      0.00       0.0       0.0                           92636448.0000
+    0:35:16    1289.5      0.00       0.0       0.0                           92636448.0000
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Constant Register Removal
+  -----------------------------------
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Global Optimizations
+  ------------------------------
+  Numerical Synthesis (Phase 1)
+  Numerical Synthesis (Phase 2)
+  Global Optimization (Phase 1)
+  Global Optimization (Phase 2)
+  Global Optimization (Phase 3)
+  Global Optimization (Phase 4)
+  Global Optimization (Phase 5)
+  Global Optimization (Phase 6)
+  Global Optimization (Phase 7)
+  Global Optimization (Phase 8)
+  Global Optimization (Phase 9)
+  Global Optimization (Phase 10)
+  Global Optimization (Phase 11)
+  Global Optimization (Phase 12)
+  Global Optimization (Phase 13)
+  Global Optimization (Phase 14)
+  Global Optimization (Phase 15)
+  Global Optimization (Phase 16)
+  Global Optimization (Phase 17)
+  Global Optimization (Phase 18)
+  Global Optimization (Phase 19)
+  Global Optimization (Phase 20)
+  Global Optimization (Phase 21)
+  Global Optimization (Phase 22)
+  Global Optimization (Phase 23)
+  Global Optimization (Phase 24)
+  Global Optimization (Phase 25)
+  Global Optimization (Phase 26)
+  Global Optimization (Phase 27)
+  Global Optimization (Phase 28)
+  Global Optimization (Phase 29)
+  Global Optimization (Phase 30)
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Isolate Ports
+  -----------------------
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+  Beginning Delay Optimization
+  ----------------------------
+    0:35:17    1199.3      0.00       0.0       0.0                           68681616.0000
+    0:35:17    1199.3      0.00       0.0       0.0                           68681616.0000
+    0:35:17    1199.3      0.00       0.0       0.0                           68681616.0000
+    0:35:17    1200.3      0.00       0.0       0.0                           68662288.0000
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+    0:35:17    1187.6      0.00       0.0       0.0                           68555000.0000
+    0:35:17    1187.6      0.00       0.0       0.0                           68555000.0000
+
+  Beginning WLM Backend Optimization
+  --------------------------------------
+    0:35:17    1186.3      0.00       0.0       0.0                           68528952.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68528952.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68528952.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+
+Threshold voltage group cell usage:
+>> saed32cell_svt 100.00%
+
+
+  Beginning Leakage Power Optimization  (max_leakage_power 0)
+  ------------------------------------
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:35:17    1186.3      0.00       0.0       0.0                           68263792.0000
+  Global Optimization (Phase 31)
+  Global Optimization (Phase 32)
+  Global Optimization (Phase 33)
+  Global Optimization (Phase 34)
+  Global Optimization (Phase 35)
+  Global Optimization (Phase 36)
+  Global Optimization (Phase 37)
+  Global Optimization (Phase 38)
+  Global Optimization (Phase 39)
+  Global Optimization (Phase 40)
+  Global Optimization (Phase 41)
+  Global Optimization (Phase 42)
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+
+                                  TOTAL                                                
+   ELAPSED            WORST NEG   SETUP    DESIGN                              LEAKAGE 
+    TIME      AREA      SLACK     COST    RULE COST         ENDPOINT            POWER  
+  --------- --------- --------- --------- --------- ------------------------- ---------
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:17    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+    0:35:18    1186.3      0.00       0.0       0.0                           67092648.0000
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.db'
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.db'
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.db'
+
+
+Note: Symbol # after min delay cost means estimated hold TNS across all active scenarios 
+
+
+  Optimization Complete
+  ---------------------
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'SRAMLP2RW128x8' in 'fifomem_DATASIZE8_ADDRSIZE10'. (LINK-5)
+Information: State dependent leakage is now switched from off to on.
+Information: Propagating switching activity (low effort zero delay simulation). (PWR-6)
+Warning: Design has unannotated black box outputs. (PWR-428)
+Information: Building the design 'SRAMLP2RW128x8'. (HDL-193)
+Warning: Cannot find the design 'SRAMLP2RW128x8' in the library 'WORK'. (LBR-1)
+Warning: Unable to resolve reference 'SRAMLP2RW128x8' in 'fifomem_DATASIZE8_ADDRSIZE10'. (LINK-5)
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Writing verilog file '/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/outputs/fifo1_srama.dc.vg'.
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+Writing ddc file '../outputs/fifo1_srama.dc.ddc'.
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+1
+dc_shell> PWD
+Error: unknown command 'PWD' (CMD-005)
+dc_shell> pwd
+/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/syn/work
+dc_shell> report_timing
+Warning: Design 'fifo1_srama' has '1' unresolved references. For more detailed information, use the "link" command. (UID-341)
+ 
+****************************************
+Report : timing
+        -path full
+        -delay max
+        -max_paths 1
+Design : fifo1_srama
+Version: Q-2019.12-SP3
+Date   : Tue Jan 24 16:15:04 2023
+****************************************
+
+Operating Conditions: ss0p95v125c   Library: saed32rvt_ss0p95v125c
+Wire Load Model Mode: enclosed
+
+  Startpoint: rptr_empty/rbin_reg_0_
+              (rising edge-triggered flip-flop clocked by rclk)
+  Endpoint: rptr_empty/rempty_reg
+            (rising edge-triggered flip-flop clocked by rclk)
+  Path Group: rclk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  fifo1_srama        8000                  saed32rvt_ss0p95v125c
+  rptr_empty_ADDRSIZE10
+                     8000                  saed32rvt_ss0p95v125c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock rclk (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  rptr_empty/rbin_reg_0_/CLK (SDFFARX1_RVT)               0.00       0.00 r
+  rptr_empty/rbin_reg_0_/Q (SDFFARX1_RVT)                 0.17       0.17 r
+  rptr_empty/U30/Y (NAND3X0_RVT)                          0.06       0.23 f
+  rptr_empty/U14/Y (INVX0_RVT)                            0.04       0.27 r
+  rptr_empty/U31/Y (NAND2X0_RVT)                          0.04       0.32 f
+  rptr_empty/U15/Y (INVX0_RVT)                            0.04       0.35 r
+  rptr_empty/U32/Y (NAND2X0_RVT)                          0.04       0.39 f
+  rptr_empty/U16/Y (INVX0_RVT)                            0.04       0.43 r
+  rptr_empty/U33/Y (NAND2X0_RVT)                          0.04       0.47 f
+  rptr_empty/U17/Y (INVX0_RVT)                            0.04       0.51 r
+  rptr_empty/U34/Y (NAND2X0_RVT)                          0.04       0.55 f
+  rptr_empty/U18/Y (INVX0_RVT)                            0.04       0.58 r
+  rptr_empty/U35/Y (NAND2X0_RVT)                          0.05       0.63 f
+  rptr_empty/U8/Y (INVX0_RVT)                             0.04       0.67 r
+  rptr_empty/U36/Y (AND2X1_RVT)                           0.05       0.73 r
+  rptr_empty/U37/Y (NAND2X0_RVT)                          0.04       0.77 f
+  rptr_empty/U19/Y (INVX0_RVT)                            0.04       0.80 r
+  rptr_empty/U39/Y (NAND2X0_RVT)                          0.04       0.85 f
+  rptr_empty/U20/Y (INVX0_RVT)                            0.04       0.89 r
+  rptr_empty/U44/Y (AND2X1_RVT)                           0.05       0.94 r
+  rptr_empty/U45/SO (HADDX1_RVT)                          0.10       1.05 f
+  rptr_empty/U9/Y (INVX0_RVT)                             0.04       1.09 r
+  rptr_empty/U46/Y (OA22X1_RVT)                           0.07       1.16 r
+  rptr_empty/U73/Y (OAI22X1_RVT)                          0.08       1.24 f
+  rptr_empty/U74/Y (AO221X1_RVT)                          0.05       1.30 f
+  rptr_empty/U75/Y (NOR4X1_RVT)                           0.09       1.39 r
+  rptr_empty/rempty_reg/D (SDFFASX1_RVT)                  0.00       1.39 r
+  data arrival time                                                  1.39
+
+  clock rclk (rise edge)                                  2.00       2.00
+  clock network delay (ideal)                             0.00       2.00
+  rptr_empty/rempty_reg/CLK (SDFFASX1_RVT)                0.00       2.00 r
+  library setup time                                     -0.13       1.87
+  data required time                                                 1.87
+  --------------------------------------------------------------------------
+  data required time                                                 1.87
+  data arrival time                                                 -1.39
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.49
+
+
+  Startpoint: wptr_full/wbin_reg_0_
+              (rising edge-triggered flip-flop clocked by wclk)
+  Endpoint: wptr_full/wfull_reg
+            (rising edge-triggered flip-flop clocked by wclk)
+  Path Group: wclk
+  Path Type: max
+
+  Des/Clust/Port     Wire Load Model       Library
+  ------------------------------------------------
+  fifo1_srama        8000                  saed32rvt_ss0p95v125c
+  wptr_full_ADDRSIZE10
+                     8000                  saed32rvt_ss0p95v125c
+
+  Point                                                   Incr       Path
+  --------------------------------------------------------------------------
+  clock wclk (rise edge)                                  0.00       0.00
+  clock network delay (ideal)                             0.00       0.00
+  wptr_full/wbin_reg_0_/CLK (SDFFARX1_RVT)                0.00       0.00 r
+  wptr_full/wbin_reg_0_/Q (SDFFARX1_RVT)                  0.17       0.17 r
+  wptr_full/U29/Y (NAND3X0_RVT)                           0.06       0.23 f
+  wptr_full/U12/Y (INVX0_RVT)                             0.04       0.27 r
+  wptr_full/U30/Y (NAND2X0_RVT)                           0.04       0.32 f
+  wptr_full/U13/Y (INVX0_RVT)                             0.04       0.35 r
+  wptr_full/U31/Y (NAND2X0_RVT)                           0.04       0.39 f
+  wptr_full/U14/Y (INVX0_RVT)                             0.04       0.43 r
+  wptr_full/U32/Y (NAND2X0_RVT)                           0.04       0.47 f
+  wptr_full/U15/Y (INVX0_RVT)                             0.04       0.51 r
+  wptr_full/U33/Y (NAND2X0_RVT)                           0.04       0.55 f
+  wptr_full/U16/Y (INVX0_RVT)                             0.04       0.58 r
+  wptr_full/U34/Y (NAND2X0_RVT)                           0.04       0.62 f
+  wptr_full/U17/Y (INVX0_RVT)                             0.04       0.66 r
+  wptr_full/U35/Y (NAND2X0_RVT)                           0.04       0.70 f
+  wptr_full/U18/Y (INVX0_RVT)                             0.04       0.74 r
+  wptr_full/U36/Y (NAND2X0_RVT)                           0.04       0.78 f
+  wptr_full/U19/Y (INVX0_RVT)                             0.04       0.82 r
+  wptr_full/U38/Y (NAND2X0_RVT)                           0.04       0.86 f
+  wptr_full/U20/Y (INVX0_RVT)                             0.04       0.90 r
+  wptr_full/U57/Y (AND2X1_RVT)                            0.05       0.96 r
+  wptr_full/U58/SO (HADDX1_RVT)                           0.11       1.07 f
+  wptr_full/U60/Y (AO22X1_RVT)                            0.07       1.14 f
+  wptr_full/U71/Y (OAI22X1_RVT)                           0.10       1.23 r
+  wptr_full/U72/Y (AO221X1_RVT)                           0.07       1.30 r
+  wptr_full/U73/Y (NOR4X1_RVT)                            0.09       1.39 f
+  wptr_full/wfull_reg/D (SDFFARX1_RVT)                    0.00       1.39 f
+  data arrival time                                                  1.39
+
+  clock wclk (rise edge)                                  2.00       2.00
+  clock network delay (ideal)                             0.00       2.00
+  wptr_full/wfull_reg/CLK (SDFFARX1_RVT)                  0.00       2.00 r
+  library setup time                                     -0.12       1.88
+  data required time                                                 1.88
+  --------------------------------------------------------------------------
+  data required time                                                 1.88
+  data arrival time                                                 -1.39
+  --------------------------------------------------------------------------
+  slack (MET)                                                        0.49
+
+
+1
+dc_shell> exit
+
+Memory usage for this session 219 Mbytes.
+Memory usage for this session including child processes 219 Mbytes.
+CPU usage for this session 61 seconds ( 0.02 hours ).
+Elapsed time for this session 2347 seconds ( 0.65 hours ).
+
+Thank you...
+

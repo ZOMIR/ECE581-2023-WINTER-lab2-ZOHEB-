@@ -1,0 +1,20 @@
+ 
+****************************************
+Report : constraint
+        -all_violators
+Design : simple_adder
+Version: Q-2019.12-SP3
+Date   : Tue Jan 17 18:55:16 2023
+****************************************
+
+
+   max_leakage_power
+
+                             Required        Actual
+   Design                   Leakage Power  Leakage Power     Slack
+   -----------------------------------------------------------------
+   simple_adder                 0.00       3666519.50     -3666519.50
+                                                                    (VIOLATED)
+
+
+1

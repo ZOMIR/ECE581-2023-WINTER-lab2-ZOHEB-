@@ -1,0 +1,1058 @@
+setting auto_restore_mw_cel_lib_setup true
+Initializing gui preferences from file  /u/zmir/.synopsys_dv_prefs.tcl
+dc_shell> set top_design fifo1_sramb
+fifo1_sramb
+dc_shell> source ../scripts/genus.tcl
+Error: unknown command 'set_db' (CMD-005)
+set lib_dir /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib
+# Decoder ring for the libraries
+# You will need to follow another example or look in the library directories to understand.
+# lib_types is used for the dc/dct linking variables and ICC2 NDM lcoations.
+# /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/db_nldm
+# /          $lib_dir                   /lib/ $lib_type /db_nldm
+# link_library, Target_library use the sub_lib_types and corner variables. 
+# For sub_lib_types and corner:
+# Example:
+#     saed32hvt_ss0p75v125c.db
+#     |sub_lib  corner    .db
+# The current flow tries to find all sub_lib and all corners in all the search paths.  Any match will be put in the library list.
+# Wild cards can be used, but be careful.  Multiple matches can occur in ways you don't want.
+# For the target library, the same method is used as the link library except only HVT and RVT lib_types are used.
+# ICC2 NDM choosing also uses the sub_lib_types so that only the required libraries and extras are not loaded.
+# fifo1
+#set top_design fifo1
+set add_ios 1
+1
+set pad_design 1
+1
+set design_size { 580 580  } 
+ 580 580  
+set design_io_border 310
+310
+set dc_floorplanning 1
+1
+set enable_dft 0
+0
+set innovus_enable_manual_macro_placement 0
+0
+set rtl_list [list ../rtl/$top_design.sv ]
+../rtl/fifo1_sramb.sv
+set slow_corner "ss0p95v125c_2p25v ss0p95v125c ss0p75v125c_i0p75v"
+ss0p95v125c_2p25v ss0p95v125c ss0p75v125c_i0p75v
+set fast_corner "ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c"
+ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c
+set synth_corners $slow_corner
+ss0p95v125c_2p25v ss0p95v125c ss0p75v125c_i0p75v
+set synth_corners_target "ss0p95v125c" 
+ss0p95v125c
+#set synth_corners_target "ss0p95v125c" 
+set synth_corners_slow $slow_corner
+ss0p95v125c_2p25v ss0p95v125c ss0p75v125c_i0p75v
+set synth_corners_fast $fast_corner
+ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c
+set slow_metal Cmax_125
+Cmax_125
+set fast_metal Cmax_125
+Cmax_125
+set lib_types "$lib_dir/io_std/db_nldm $lib_dir/sram_lp/db_nldm $lib_dir/pll/db_nldm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm
+set ndm_types "$lib_dir/stdcell_rvt/ndm $lib_dir/stdcell_hvt/ndm $lib_dir/sram_lp/ndm $lib_dir/io_std/ndm  $lib_dir/pll/ndm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/ndm  /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/ndm
+set lib_types_target "$lib_dir/stdcell_rvt/db_nldm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm
+# Get just the main standard cells, sram_lp_lps and IOs
+set sub_lib_type "saed32?vt_ saed32sramlp_ saed32io_wb_ saed32pll_"
+saed32?vt_ saed32sramlp_ saed32io_wb_ saed32pll_
+set sub_lib_type_target "saed32rvt_"
+saed32rvt_
+set lef_types [list $lib_dir/stdcell_hvt/lef  $lib_dir/stdcell_rvt/lef $lib_dir/stdcell_lvt/lef $lib_dir/sram_lp/lef/ $lib_dir/io_std/lef $lib_dir/pll/lef ]
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_lvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/lef/ /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/lef
+set sub_lef_type "saed32nm_?vt_*.lef saed32_sram_lp_*.lef saed32io_std_wb saed32_PLL.lef"
+saed32nm_?vt_*.lef saed32_sram_lp_*.lef saed32io_std_wb saed32_PLL.lef
+set mwlib_types [list $lib_dir/stdcell_hvt/milkyway $lib_dir/stdcell_rvt/milkyway $lib_dir/stdcell_lvt/milkyway  $lib_dir/io_std/milkyway $lib_dir/sram_lp/milkyway $lib_dir/pll/milkyway  ]
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_lvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/milkyway
+set sub_mwlib_type "saed32nm_?vt_* SRAM32NM saed32io_wb_* SAED32_PLL_FR*"
+saed32nm_?vt_* SRAM32NM saed32io_wb_* SAED32_PLL_FR*
+#set topdir /u/$env(USER)/PSU_RTL2GDS
+set topdir [ lindex [ regexp -inline "(.*)\(syn\|pt\|apr\)" [pwd] ] 1 ]
+/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/
+set FCL 0
+0
+set split_constraints 0
+0
+Error: unknown command 'get_db' (CMD-005)
+Error: can't read "designs": no such variable
+        Use error_info for more info. (CMD-013)
+Error: unknown command 'set_db' (CMD-005)
+Error: unknown command 'set_db' (CMD-005)
+Error: unknown command 'set_db' (CMD-005)
+Error: unknown command 'set_db' (CMD-005)
+Error: unknown command 'read_hdl' (CMD-005)
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/design_compiler/syn/Q-2019.12-SP3/libraries/syn/gtech.db'
+Loading db file '/pkgs/synopsys/2020/design_compiler/syn/Q-2019.12-SP3/libraries/syn/standard.sldb'
+  Loading link library 'gtech'
+Error: Cannot find the design 'fifo1_sramb' in the library 'WORK'. (LBR-0)
+#####################################################
+proc insert_io { port side} {
+global top_design
+  set this_io io_${side}_${port}
+  if {  $side == "t"   } {
+   if { [get_db [get_port $port ] .direction ] == "in" } {
+    create_inst -name $this_io I1025_NS $top_design 
+   } else {
+    create_inst -name $this_io D8I1025_NS $top_design
+   }
+  }
+  if { $side == "b"  } {
+   if { [get_db [get_port $port ] .direction ] == "in" } {
+    create_inst -name $this_io I1025_NS $top_design
+   } else {
+    create_inst -name $this_io D8I1025_NS $top_design
+   }
+  }
+  if {  $side == "r"  } {
+   if { [get_db [get_port $port ] .direction ] == "in" } {
+    create_inst -name $this_io I1025_NS $top_design
+   } else {
+    create_inst -name $this_io D8I1025_NS $top_design
+   }
+  }
+  if { $side == "l"  } {
+   if { [get_db [get_port $port ] .direction ] == "in" } {
+    create_inst -name $this_io I1025_NS $top_design
+   } else {
+    create_inst -name $this_io D8I1025_NS $top_design 
+   }
+  }
+
+
+
+  #DIN is input to IO_PAD
+  #DOUT is output of IO_PAD
+  #EN is the IO_PAD enable to output
+  if { [get_db [get_port $port ] .direction ] == "in" } {
+     # Disconnect all pins related to the old port and make a new net name and connect them up to that new net.
+     
+     # Find all the hpins or real pins connected at the top level to the port net.
+     # this is a little tricky since Genus indicates leaf pins which might cross hierarchy boundaries except for the all_connected command
+     set pins [get_db [ all_connected $port ] -if ".obj_type==*pin"] 
+     # disconnect seems to be working better with the get_db object instead of the text name.
+     foreach_in i $pins { disconnect $i  }
+     foreach_in i $pins { 
+        # Connect arguments must have the driver pin/port followed by a load.  net name is optional, but needed if a new net.
+        connect -net ${this_io}_net ${this_io}/DOUT [get_db $i .name ]
+     }
+
+     # connect up the PADIO to the original port net and connect other important PAD pins.
+     connect -net $port $port $this_io/PADIO
+     #connect_net [get_nets  *Logic0* ] ${this_io}/EN 
+     connect 1 ${this_io}/R_EN
+  } else {
+     # Find all the hpins or real pins connected at the top level to the port net.
+     # this is a little tricky since Genus indicates leaf pins which might cross hierarchy boundaries except for the all_connected command
+     set pins [get_db [ all_connected $port ] -if ".obj_type==*pin"] 
+     # disconnect seems to be working better with the get_db object instead of the text name.
+     foreach_in i $pins { disconnect $i  }
+     # Connect arguments must have the driver pin/port followed by a load.  net name is optional, but needed if a new net.
+     connect -net ${this_io}_net [get_db $pins -if ".direction==out" ] $this_io/DIN
+     # This internal driver might drive to other loads other than the port.  It might drive back into other spots in the design.
+     set other_receivers [get_db $pins -if ".direction==in" ]
+     if {$other_receivers!=""} { 
+        connect -net ${this_io}_net [get_db $pins -if ".direction==out" ] $other_receivers
+     }
+
+     # connect up the PADIO to the original port net and connect other important PAD pins.
+     connect -net $port $this_io/PADIO $port
+     connect 1 $this_io/EN 
+     #connect_net [get_nets  *Logic0* ] $this_io/R_EN 
+  }
+}
+####################################################
+Error: Current design is not defined. (UID-4)
+Error: Can't find ports matching 'rdata*'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find ports matching 'wdata*'. (UID-109)
+Error: ambiguous command 'get_port' matched 2 commands:
+        (get_port_names, get_ports) (CMD-006)
+Error: ambiguous command 'get_port' matched 2 commands:
+        (get_port_names, get_ports) (CMD-006)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+if { [info exists synopsys_program_name ] && ($synopsys_program_name == "icc2_shell") } {
+    puts " Creating ICC2 MCMM "
+    create_mode func
+    create_corner slow
+    create_scenario -mode func -corner slow -name func_slow
+    current_scenario func_slow
+    set_operating_conditions ss0p75v125c
+    set_operating conditions ss0p75v125c_i0p75v
+    read_parasitic_tech -tlup $tlu_dir/saed32nm_1p9m_Cmax.tluplus -layermap $tlu_dir/saed32nm_tf_itf_tluplus.map -name Cmax
+    read_parasitic_tech -tlup $tlu_dir/saed32nm_1p9m_Cmin.tluplus -layermap $tlu_dir/saed32nm_tf_itf_tluplus.map -name Cmin
+    set_parasitic_parameters -early_spec Cmax -early_temperature 125
+    set_parasitic_parameters -late_spec Cmax -late_temperature 125
+    #set_parasitic_parameters -early_spec 1p9m_Cmax -early_temperature 125 -corner default
+    #set_parasitic_parameters -late_spec 1p9m_Cmax -late_temperature 125 -corner default
+
+    #set_scenario_status  default -active false
+    set_scenario_status func_slow -active true -hold true -setup true
+}
+set wclk_period 1.05
+1.05
+set rclk_period 0.98
+0.98
+set wclk2x_period [ expr $wclk_period / 2 ]
+0.525
+create_clock -name "wclk" -period $wclk_period  wclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk'. (UID-109)
+Error: Value for list 'source_objects' must have 1 elements. (CMD-036)
+0
+create_clock -name "rclk" -period $rclk_period rclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'rclk'. (UID-109)
+Error: Value for list 'source_objects' must have 1 elements. (CMD-036)
+0
+#Add the new clock.  Make it 1/2 the wclk period since it is called wclk2x
+create_clock -name "wclk2x" -period $wclk2x_period wclk2x
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk2x'. (UID-109)
+Error: Value for list 'source_objects' must have 1 elements. (CMD-036)
+0
+set_false_path -from [get_clocks wclk ] -to [get_clocks rclk]
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+Error: Value for list '-to' must have 1 elements. (CMD-036)
+0
+set_false_path -from [get_clocks rclk ] -to [ get_clocks wclk]
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+Error: Value for list '-to' must have 1 elements. (CMD-036)
+0
+# Add input/output delays in relation to related clocks
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[7]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[7]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[6]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[6]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[5]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[5]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[4]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[4]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[3]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[3]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[2]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[2]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[1]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[1]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[0]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[0]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk -0.39 [get_ports {winc}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'winc'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock rclk -0.36 [get_ports {rinc}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rinc'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[7]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[7]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[6]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[6]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[5]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[5]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[4]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[4]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[3]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[3]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[2]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[2]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[1]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[1]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[0]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[0]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.82 [get_ports {rempty}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rempty'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock wclk -0.77 [get_ports {wfull}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wfull'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+# driving cell
+#set_driving_cell -lib_cell NBUFFX4_RVT [get_ports -filter "direction==in&&full_name!~*clk*"]
+set_drive 0.00001 [ get_ports -filter "direction==in&&full_name!~*clk*"]
+Error: Value for list 'port_list' must have 1 elements. (CMD-036)
+0
+# Can tell the related clock by doing report_timing -group INPUTS  or -group OUTPUTS after using group_path
+# External delay should be some percentage of clock period.
+# Tune/relax if violating; most concerned about internal paths.
+#clock details
+set_clock_uncertainty -setup 0.07 rclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'rclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -hold 0.01 rclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'rclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_latency 0.17 rclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'rclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_transition 0.17 rclk 
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list 'clock_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -setup 0.07 wclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -hold 0.01 wclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_latency 0.17 wclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_transition 0.17 wclk 
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Value for list 'clock_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -setup 0.07 wclk2x
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk2x'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -hold 0.01 wclk2x
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk2x'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_latency 0.17 wclk2x
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk2x'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_transition 0.17 wclk2x 
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list 'clock_list' must have 1 elements. (CMD-036)
+0
+# I like set_driving_cell to a std cell from the library.  set_drive works to.
+# set_load
+set_load 0.4 [ get_ports -filter "direction==out" ]
+Error: Value for list 'objects' must have 1 elements. (CMD-036)
+0
+#group_path -name INTERNAL -from [all_clocks] -to [all_clocks ]
+group_path -name INPUTS -from [ get_ports -filter "direction==in&&full_name!~*clk*"]
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+0
+group_path -name OUTPUTS -to [ get_ports -filter "direction==out" ]
+Error: Value for list '-to' must have 1 elements. (CMD-036)
+0
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Error: Can't find lib_cells matching '*/DELLN*'. (UID-109)
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+Error: unknown command 'syn_gen' (CMD-005)
+Error: extra positional option 'fifo1_sramb' (CMD-012)
+Error: unknown command 'syn_map' (CMD-005)
+Error: unknown command 'syn_opt' (CMD-005)
+Error: unknown command 'check_timing_intent' (CMD-005)
+Error: unknown command 'write_hdl' (CMD-005)
+Error: unknown command 'write_db' (CMD-005)
+dc_shell> source ../scripts/genus.tcl
+Error: unknown command 'set_db' (CMD-005)
+set lib_dir /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib
+# Decoder ring for the libraries
+# You will need to follow another example or look in the library directories to understand.
+# lib_types is used for the dc/dct linking variables and ICC2 NDM lcoations.
+# /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/db_nldm
+# /          $lib_dir                   /lib/ $lib_type /db_nldm
+# link_library, Target_library use the sub_lib_types and corner variables. 
+# For sub_lib_types and corner:
+# Example:
+#     saed32hvt_ss0p75v125c.db
+#     |sub_lib  corner    .db
+# The current flow tries to find all sub_lib and all corners in all the search paths.  Any match will be put in the library list.
+# Wild cards can be used, but be careful.  Multiple matches can occur in ways you don't want.
+# For the target library, the same method is used as the link library except only HVT and RVT lib_types are used.
+# ICC2 NDM choosing also uses the sub_lib_types so that only the required libraries and extras are not loaded.
+# fifo1
+#set top_design fifo1
+set add_ios 1
+1
+set pad_design 1
+1
+set design_size { 580 580  } 
+ 580 580  
+set design_io_border 310
+310
+set dc_floorplanning 1
+1
+set enable_dft 0
+0
+set innovus_enable_manual_macro_placement 0
+0
+set rtl_list [list ../rtl/$top_design.sv ]
+../rtl/fifo1_sramb.sv
+set slow_corner "ss0p95v125c_2p25v ss0p95v125c ss0p75v125c_i0p75v"
+ss0p95v125c_2p25v ss0p95v125c ss0p75v125c_i0p75v
+set fast_corner "ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c"
+ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c
+set synth_corners $slow_corner
+ss0p95v125c_2p25v ss0p95v125c ss0p75v125c_i0p75v
+set synth_corners_target "ss0p95v125c" 
+ss0p95v125c
+#set synth_corners_target "ss0p95v125c" 
+set synth_corners_slow $slow_corner
+ss0p95v125c_2p25v ss0p95v125c ss0p75v125c_i0p75v
+set synth_corners_fast $fast_corner
+ff0p95vn40c ff1p16vn40c_2p75v ff1p16vn40c
+set slow_metal Cmax_125
+Cmax_125
+set fast_metal Cmax_125
+Cmax_125
+set lib_types "$lib_dir/io_std/db_nldm $lib_dir/sram_lp/db_nldm $lib_dir/pll/db_nldm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm
+set ndm_types "$lib_dir/stdcell_rvt/ndm $lib_dir/stdcell_hvt/ndm $lib_dir/sram_lp/ndm $lib_dir/io_std/ndm  $lib_dir/pll/ndm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/ndm /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/ndm  /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/ndm
+set lib_types_target "$lib_dir/stdcell_rvt/db_nldm"
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm
+# Get just the main standard cells, sram_lp_lps and IOs
+set sub_lib_type "saed32?vt_ saed32sramlp_ saed32io_wb_ saed32pll_"
+saed32?vt_ saed32sramlp_ saed32io_wb_ saed32pll_
+set sub_lib_type_target "saed32rvt_"
+saed32rvt_
+set lef_types [list $lib_dir/stdcell_hvt/lef  $lib_dir/stdcell_rvt/lef $lib_dir/stdcell_lvt/lef $lib_dir/sram_lp/lef/ $lib_dir/io_std/lef $lib_dir/pll/lef ]
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_lvt/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/lef/ /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/lef /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/lef
+set sub_lef_type "saed32nm_?vt_*.lef saed32_sram_lp_*.lef saed32io_std_wb saed32_PLL.lef"
+saed32nm_?vt_*.lef saed32_sram_lp_*.lef saed32io_std_wb saed32_PLL.lef
+set mwlib_types [list $lib_dir/stdcell_hvt/milkyway $lib_dir/stdcell_rvt/milkyway $lib_dir/stdcell_lvt/milkyway  $lib_dir/io_std/milkyway $lib_dir/sram_lp/milkyway $lib_dir/pll/milkyway  ]
+/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_hvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_lvt/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/milkyway /pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/milkyway
+set sub_mwlib_type "saed32nm_?vt_* SRAM32NM saed32io_wb_* SAED32_PLL_FR*"
+saed32nm_?vt_* SRAM32NM saed32io_wb_* SAED32_PLL_FR*
+#set topdir /u/$env(USER)/PSU_RTL2GDS
+set topdir [ lindex [ regexp -inline "(.*)\(syn\|pt\|apr\)" [pwd] ] 1 ]
+/u/zmir/ECE581-2023-WINTER-lab1-ZOHEB/synth_apr_repo/
+set FCL 0
+0
+set split_constraints 0
+0
+Error: unknown command 'get_db' (CMD-005)
+Error: can't read "designs": no such variable
+        Use error_info for more info. (CMD-013)
+Error: unknown command 'set_db' (CMD-005)
+Error: unknown command 'set_db' (CMD-005)
+Error: unknown command 'set_db' (CMD-005)
+Error: unknown command 'set_db' (CMD-005)
+Error: unknown command 'read_hdl' (CMD-005)
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Error: Cannot find the design 'fifo1_sramb' in the library 'WORK'. (LBR-0)
+#####################################################
+proc insert_io { port side} {
+global top_design
+  set this_io io_${side}_${port}
+  if {  $side == "t"   } {
+   if { [get_db [get_port $port ] .direction ] == "in" } {
+    create_inst -name $this_io I1025_NS $top_design 
+   } else {
+    create_inst -name $this_io D8I1025_NS $top_design
+   }
+  }
+  if { $side == "b"  } {
+   if { [get_db [get_port $port ] .direction ] == "in" } {
+    create_inst -name $this_io I1025_NS $top_design
+   } else {
+    create_inst -name $this_io D8I1025_NS $top_design
+   }
+  }
+  if {  $side == "r"  } {
+   if { [get_db [get_port $port ] .direction ] == "in" } {
+    create_inst -name $this_io I1025_NS $top_design
+   } else {
+    create_inst -name $this_io D8I1025_NS $top_design
+   }
+  }
+  if { $side == "l"  } {
+   if { [get_db [get_port $port ] .direction ] == "in" } {
+    create_inst -name $this_io I1025_NS $top_design
+   } else {
+    create_inst -name $this_io D8I1025_NS $top_design 
+   }
+  }
+
+
+
+  #DIN is input to IO_PAD
+  #DOUT is output of IO_PAD
+  #EN is the IO_PAD enable to output
+  if { [get_db [get_port $port ] .direction ] == "in" } {
+     # Disconnect all pins related to the old port and make a new net name and connect them up to that new net.
+     
+     # Find all the hpins or real pins connected at the top level to the port net.
+     # this is a little tricky since Genus indicates leaf pins which might cross hierarchy boundaries except for the all_connected command
+     set pins [get_db [ all_connected $port ] -if ".obj_type==*pin"] 
+     # disconnect seems to be working better with the get_db object instead of the text name.
+     foreach_in i $pins { disconnect $i  }
+     foreach_in i $pins { 
+        # Connect arguments must have the driver pin/port followed by a load.  net name is optional, but needed if a new net.
+        connect -net ${this_io}_net ${this_io}/DOUT [get_db $i .name ]
+     }
+
+     # connect up the PADIO to the original port net and connect other important PAD pins.
+     connect -net $port $port $this_io/PADIO
+     #connect_net [get_nets  *Logic0* ] ${this_io}/EN 
+     connect 1 ${this_io}/R_EN
+  } else {
+     # Find all the hpins or real pins connected at the top level to the port net.
+     # this is a little tricky since Genus indicates leaf pins which might cross hierarchy boundaries except for the all_connected command
+     set pins [get_db [ all_connected $port ] -if ".obj_type==*pin"] 
+     # disconnect seems to be working better with the get_db object instead of the text name.
+     foreach_in i $pins { disconnect $i  }
+     # Connect arguments must have the driver pin/port followed by a load.  net name is optional, but needed if a new net.
+     connect -net ${this_io}_net [get_db $pins -if ".direction==out" ] $this_io/DIN
+     # This internal driver might drive to other loads other than the port.  It might drive back into other spots in the design.
+     set other_receivers [get_db $pins -if ".direction==in" ]
+     if {$other_receivers!=""} { 
+        connect -net ${this_io}_net [get_db $pins -if ".direction==out" ] $other_receivers
+     }
+
+     # connect up the PADIO to the original port net and connect other important PAD pins.
+     connect -net $port $this_io/PADIO $port
+     connect 1 $this_io/EN 
+     #connect_net [get_nets  *Logic0* ] $this_io/R_EN 
+  }
+}
+####################################################
+Error: Current design is not defined. (UID-4)
+Error: Can't find ports matching 'rdata*'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find ports matching 'wdata*'. (UID-109)
+Error: ambiguous command 'get_port' matched 2 commands:
+        (get_port_names, get_ports) (CMD-006)
+Error: ambiguous command 'get_port' matched 2 commands:
+        (get_port_names, get_ports) (CMD-006)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+Error: unknown command 'update_names' (CMD-005)
+if { [info exists synopsys_program_name ] && ($synopsys_program_name == "icc2_shell") } {
+    puts " Creating ICC2 MCMM "
+    create_mode func
+    create_corner slow
+    create_scenario -mode func -corner slow -name func_slow
+    current_scenario func_slow
+    set_operating_conditions ss0p75v125c
+    set_operating conditions ss0p75v125c_i0p75v
+    read_parasitic_tech -tlup $tlu_dir/saed32nm_1p9m_Cmax.tluplus -layermap $tlu_dir/saed32nm_tf_itf_tluplus.map -name Cmax
+    read_parasitic_tech -tlup $tlu_dir/saed32nm_1p9m_Cmin.tluplus -layermap $tlu_dir/saed32nm_tf_itf_tluplus.map -name Cmin
+    set_parasitic_parameters -early_spec Cmax -early_temperature 125
+    set_parasitic_parameters -late_spec Cmax -late_temperature 125
+    #set_parasitic_parameters -early_spec 1p9m_Cmax -early_temperature 125 -corner default
+    #set_parasitic_parameters -late_spec 1p9m_Cmax -late_temperature 125 -corner default
+
+    #set_scenario_status  default -active false
+    set_scenario_status func_slow -active true -hold true -setup true
+}
+set wclk_period 1.05
+1.05
+set rclk_period 0.98
+0.98
+set wclk2x_period [ expr $wclk_period / 2 ]
+0.525
+create_clock -name "wclk" -period $wclk_period  wclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk'. (UID-109)
+Error: Value for list 'source_objects' must have 1 elements. (CMD-036)
+0
+create_clock -name "rclk" -period $rclk_period rclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'rclk'. (UID-109)
+Error: Value for list 'source_objects' must have 1 elements. (CMD-036)
+0
+#Add the new clock.  Make it 1/2 the wclk period since it is called wclk2x
+create_clock -name "wclk2x" -period $wclk2x_period wclk2x
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk2x'. (UID-109)
+Error: Value for list 'source_objects' must have 1 elements. (CMD-036)
+0
+set_false_path -from [get_clocks wclk ] -to [get_clocks rclk]
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+Error: Value for list '-to' must have 1 elements. (CMD-036)
+0
+set_false_path -from [get_clocks rclk ] -to [ get_clocks wclk]
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+Error: Value for list '-to' must have 1 elements. (CMD-036)
+0
+# Add input/output delays in relation to related clocks
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[7]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[7]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[6]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[6]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[5]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[5]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[4]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[4]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[3]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[3]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[2]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[2]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[1]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[1]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk2x -0.14 [get_ports {wdata_in[0]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wdata_in[0]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock wclk -0.39 [get_ports {winc}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'winc'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_input_delay -clock rclk -0.36 [get_ports {rinc}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rinc'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[7]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[7]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[6]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[6]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[5]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[5]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[4]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[4]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[3]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[3]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[2]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[2]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[1]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[1]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.97 [get_ports {rdata[0]}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rdata[0]'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock rclk -0.82 [get_ports {rempty}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'rempty'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+set_output_delay -clock wclk -0.77 [get_ports {wfull}]
+Error: Current design is not defined. (UID-4)
+Error: Can't find port 'wfull'. (UID-109)
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Value for list '-clock' must have 1 elements. (CMD-036)
+Error: Value for list 'port_pin_list' must have 1 elements. (CMD-036)
+0
+# driving cell
+#set_driving_cell -lib_cell NBUFFX4_RVT [get_ports -filter "direction==in&&full_name!~*clk*"]
+set_drive 0.00001 [ get_ports -filter "direction==in&&full_name!~*clk*"]
+Error: Value for list 'port_list' must have 1 elements. (CMD-036)
+0
+# Can tell the related clock by doing report_timing -group INPUTS  or -group OUTPUTS after using group_path
+# External delay should be some percentage of clock period.
+# Tune/relax if violating; most concerned about internal paths.
+#clock details
+set_clock_uncertainty -setup 0.07 rclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'rclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -hold 0.01 rclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'rclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_latency 0.17 rclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'rclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_transition 0.17 rclk 
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'rclk'. (UID-109)
+Error: Value for list 'clock_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -setup 0.07 wclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -hold 0.01 wclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_latency 0.17 wclk
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_transition 0.17 wclk 
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk'. (UID-109)
+Error: Value for list 'clock_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -setup 0.07 wclk2x
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk2x'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_uncertainty -hold 0.01 wclk2x
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk2x'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_latency 0.17 wclk2x
+Error: Current design is not defined. (UID-4)
+Error: Can't find object 'wclk2x'. (UID-109)
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+0
+set_clock_transition 0.17 wclk2x 
+Error: Current design is not defined. (UID-4)
+Error: Can't find clock 'wclk2x'. (UID-109)
+Error: Value for list 'clock_list' must have 1 elements. (CMD-036)
+0
+# I like set_driving_cell to a std cell from the library.  set_drive works to.
+# set_load
+set_load 0.4 [ get_ports -filter "direction==out" ]
+Error: Value for list 'objects' must have 1 elements. (CMD-036)
+0
+#group_path -name INTERNAL -from [all_clocks] -to [all_clocks ]
+group_path -name INPUTS -from [ get_ports -filter "direction==in&&full_name!~*clk*"]
+Error: Value for list '-from' must have 1 elements. (CMD-036)
+0
+group_path -name OUTPUTS -to [ get_ports -filter "direction==out" ]
+Error: Value for list '-to' must have 1 elements. (CMD-036)
+0
+Error: Can't find lib_cells matching '*/DELLN*'. (UID-109)
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/io_std/db_nldm/saed32io_wb_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/sram_lp/db_nldm/saed32sramlp_ss0p75v125c_i0p75v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/pll/db_nldm/saed32pll_ss0p95v125c_2p25v.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Loading db file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib'
+Error: File is not a DB file. (DB-1)
+Error: The file '/pkgs/synopsys/2020/32_28nm/SAED32_EDK/lib/stdcell_rvt/db_nldm/saed32rvt_ss0p95v125c.lib' is not a DB file.
+Error: Value for list 'object_list' must have 1 elements. (CMD-036)
+Error: unknown command 'syn_gen' (CMD-005)
+Error: extra positional option 'fifo1_sramb' (CMD-012)
+Error: unknown command 'syn_map' (CMD-005)
+Error: unknown command 'syn_opt' (CMD-005)
+Error: unknown command 'check_timing_intent' (CMD-005)
+Error: unknown command 'write_hdl' (CMD-005)
+Error: unknown command 'write_db' (CMD-005)
+dc_shell> exit
+
+Memory usage for this session 63 Mbytes.
+Memory usage for this session including child processes 63 Mbytes.
+CPU usage for this session 3 seconds ( 0.00 hours ).
+Elapsed time for this session 95 seconds ( 0.03 hours ).
+
+Thank you...
+
